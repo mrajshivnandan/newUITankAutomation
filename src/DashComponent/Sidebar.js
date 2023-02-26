@@ -4,16 +4,16 @@ import contactImg from '../images/undraw_rocket.svg'
 import myImg from '../images/logo4.png'
 
 function Sidebar() {
-    const [style, setStyle] = useState("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion");
+    const [style, setStyle] = useState("navbar-nav sidebar sidebar-dark accordion");
 
     const changeStyle = () => {
-        if (style == "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion")
+        if (style == "navbar-nav sidebar sidebar-dark accordion")
         {
-            setStyle("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled");
+            setStyle("navbar-nav sidebar sidebar-dark accordion toggled");
             
         }
         else{
-            setStyle("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion")
+            setStyle("navbar-nav sidebar sidebar-dark accordion")
         }
     };
 

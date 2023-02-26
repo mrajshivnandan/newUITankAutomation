@@ -17,8 +17,10 @@ import { Routes, Route } from "react-router-dom";
 function App() {
   return (
     <div className="mysidebar">
+    <div class=" bg-gradient-primary">
       <Sidebar />
-      <main className="content">
+      </div>
+      <main className="content ">
       <Topbar />
       <Routes>
         <Route exact path="/" element={<Dashboard />} />

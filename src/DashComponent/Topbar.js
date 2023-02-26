@@ -19,7 +19,7 @@ const signoutUser = () => {
     // console.log('Signing out user');
     setModalBtnClick(() => {
         logoutUser(appdata).then(() => {
-            navigate('/home');
+            navigate('/');
             window.location.reload();
         }).finally(() => {
             // console.log('Showing alert');

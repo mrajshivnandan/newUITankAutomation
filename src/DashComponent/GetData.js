@@ -88,14 +88,14 @@ const GetData = () => {
                     <p className='text-center text-warning'>{repeatedData?"This may be some old data":""}</p>
                     
                     <div className="container form-check form-switch form-check-reverse content-align-center">
-                        <div className="my-4 d-flex justify-content-around">
-                            <div>Build-in LED : </div>
-                            <input className="form-check-input" name="buildLed" onClick={(e)=>{toggleCheckbox(e,sensorData,setSensorData)}} 
+                        <div className="my-4 d-flex flex-column justify-content-evenly">
+                            <div>: Build-in LED</div>
+                            <input className="ms-2 form-check-input" name="buildLed" onClick={(e)=>{toggleCheckbox(e,sensorData,setSensorData)}} 
                             checked={sensorData.buildLed} type="checkbox" role="switch" id="buildLed" style={{ transform: "scale(2.4)" }} readOnly />
                         </div>
-                        <div className="my-4 d-flex justify-content-around">
-                            <div>Motor Switch : </div>
-                            <input className="form-check-input" name="motorOn" onClick={(e)=>{toggleCheckbox(e,sensorData,setSensorData)}} 
+                        <div className="my-4 d-flex flex-column justify-content-evenly">
+                            <div>: Motor Switch</div>
+                            <input className="ms-2 form-check-input" name="motorOn" onClick={(e)=>{toggleCheckbox(e,sensorData,setSensorData)}} 
                             checked={sensorData.motorOn} type="checkbox" role="switch" id="motorSwitch" style={{ transform: "scale(2.4)" }} readOnly />
                         </div>
                     </div>
