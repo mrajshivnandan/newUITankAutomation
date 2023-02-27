@@ -122,7 +122,7 @@ function Sidebar() {
                         <div className="sidebar-card d-none d-lg-flex">
                             <img className="sidebar-card-illustration mb-2" src={contactImg} alt="..." />
                             <p className="text-center mb-2">Having trouble in <br /><strong>Tank Automation</strong> <br />Please contact us</p>
-                            <a className="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Help Center</a>
+                            <Link className="btn btn-success btn-sm" to="contactus">Help Center</Link>
                         </div>
 
                     </ul>

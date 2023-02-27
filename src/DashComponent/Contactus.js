@@ -129,7 +129,8 @@ const Contactus = () => {
 
 
                         <div className="d-flex flex-row align-items-center mb-1">
-                            <i className="fas fa-mobile fa-lg me-3 fa-fw"></i>
+                        {/* <i class="fa-solid fa-messageme-3 fa-fw"></i> */}
+                            <i className="fas fa-pen fa-lg me-3 fa-fw"></i>
                             <div className="placeholder-glow form-outline flex-fill mb-0">
                                 <textarea rows='3' type="text" name="message" className="glowme form-control fw-bold"
                                     onBlur={handleBlur} onChange={handleChange} value={values.message} placeholder="Message" required/>

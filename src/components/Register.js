@@ -142,7 +142,7 @@ const Register = () => {
 
 
                             <div className="d-flex flex-row align-items-center mb-0">
-                                <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                                <i className="fas fa-mobile fa-lg me-3 fa-fw"></i>
                                 <div className="form-outline flex-fill mb-0">
                                     <input type="text" name="phone" onBlur={handleBlur} onChange={handleChange} value={values.phone} className="form-control"
                                         placeholder="Your Mobile no." />

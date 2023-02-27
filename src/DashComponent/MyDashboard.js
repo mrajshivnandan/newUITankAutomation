@@ -27,7 +27,7 @@ function App() {
         <Route exact path="/user/details" element={<div>User Details</div> } />
         <Route path="/profile" element={<Profile/>} />
         <Route path="/getdata" element={<GetData/>} />
-        <Route path="/contactus" element={<BackPage Element= {Contactus}/>} />
+        <Route path="/contactus" element={<Contactus/>} />
         <Route path="/schedule" element={<ScheduleWater/>} />
         <Route path="/supplyList" element={<SupplyList/>} />
         <Route path="/configure" element={<Configure/>} />
