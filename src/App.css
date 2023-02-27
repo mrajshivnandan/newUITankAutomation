@@ -196,7 +196,11 @@ input:checked+.slider:before {
 }
 .content{
   width: 100%;
+  background-color: azure;
 }
 .topbar{
   border-radius: 0px;
+}
+.list-group-item{
+  background: transparent;
 }

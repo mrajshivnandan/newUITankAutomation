@@ -136,7 +136,7 @@ const Profile = () => {
                                     <h5 className="card-title">Society Name</h5>
                                     <p className="card-text">Location of society</p>
                                 </div>
-                                <ul className="list-group list-group-flush" style={{ zIndex: "0" }}>
+                                <ul className="list-group list-group-flush" style={{ zIndex: "1" }}>
                                     <li className="list-group-item">Room number</li>
                                     <li className="list-group-item">tank capacity</li>
                                     <li className="list-group-item">other info</li>
@@ -148,7 +148,7 @@ const Profile = () => {
                             </div>
                         </div>
                         <div className="col-sm-10 col-md-8 d-flex flex-column order-2 mt-4" >
-                            <div className="col-md-10 col-lg-4 col-xl-3 order-1 d-flex w-100 justify-content-between">
+                            <div className="col-md-10 col-lg-4 col-xl-3 order-1 d-flex mw-100 justify-content-between">
                                 <div className='placeholder-glow' >
                                     <div className='glowme text_bold'>{userData.name}</div>
                                     <div className="w-100"></div>
@@ -161,7 +161,7 @@ const Profile = () => {
                                 </div>
                             </div>
 
-                            <div className="col-md-10 col-lg-8 col-xl-9 w-100 d-flex order-2 mt-4">
+                            <div className="col-md-10 col-lg-8 col-xl-9 mw-100 d-flex order-2 mt-4">
                                 <div className="d-flex flex-column flex-fill">
                                     <ul className="nav nav-tabs">
                                         <li className="nav-item">

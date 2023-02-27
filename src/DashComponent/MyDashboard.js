@@ -25,12 +25,12 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Dashboard />} />
         <Route exact path="/user/details" element={<div>User Details</div> } />
-        <Route path="/profile" element={<BackPage Element= {Profile}/>} />
-        <Route path="/getdata" element={<BackPage Element= {GetData}/>} />
+        <Route path="/profile" element={<Profile/>} />
+        <Route path="/getdata" element={<GetData/>} />
         <Route path="/contactus" element={<BackPage Element= {Contactus}/>} />
-        <Route path="/schedule" element={<BackPage Element= {ScheduleWater}/>} />
-        <Route path="/supplyList" element={<BackPage Element= {SupplyList}/>} />
-        <Route path="/configure" element={<BackPage Element= {Configure}/>} />
+        <Route path="/schedule" element={<ScheduleWater/>} />
+        <Route path="/supplyList" element={<SupplyList/>} />
+        <Route path="/configure" element={<Configure/>} />
       </Routes>
       </main>
     </div>

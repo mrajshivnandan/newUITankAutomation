@@ -1,20 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import contactImg from '../images/undraw_rocket.svg'
 import myImg from '../images/logo4.png'
 
 function Sidebar() {
-    const [style, setStyle] = useState("navbar-nav sidebar sidebar-dark accordion");
 
     const changeStyle = () => {
-        if (style == "navbar-nav sidebar sidebar-dark accordion")
-        {
-            setStyle("navbar-nav sidebar sidebar-dark accordion toggled");
-            
-        }
-        else{
-            setStyle("navbar-nav sidebar sidebar-dark accordion")
-        }
+        const varr = document.getElementById('accordionSidebar')
+        varr.classList.toggle("toggled");
     };
 
     return (
@@ -24,10 +17,10 @@ function Sidebar() {
                 <div id="wrapper">
 
                     {/*  <!-- Sidebar --> */}
-                    <ul className={style} id="accordionSidebar">
+                    <ul className="navbar-nav sidebar sidebar-dark" id="accordionSidebar">
 
                         {/*  <!-- Sidebar - Brand --> */}
-                        <a className="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+                        <span className="sidebar-brand d-flex align-items-center justify-content-center">
                             <div className="sidebar-brand-icon">
                             <img src={myImg} alt="..." width={80} height={80}    />
                             </div>
@@ -35,7 +28,7 @@ function Sidebar() {
                             <div className="text-center d-none d-md-inline">
                             <button className="rounded-circle border-0" id="sidebarToggle" onClick={changeStyle}></button>
                         </div>
-                        </a>
+                        </span>
 
                         {/*   <!-- Divider --> */}
                         <hr className="sidebar-divider my-0" />
@@ -91,9 +84,10 @@ function Sidebar() {
 
                         {/* <!-- Nav Item - Charts --> */}
                         <li className="nav-item">
-                            <a className="nav-link" href="charts.html">
-                                <i className="fas fa-fw fa-chart-area"></i>
-                                <span>Automatic</span></a>
+                            <Link className="nav-link" to="/schedule">
+                                <i className="fas fa-fw fa-folder"></i>
+                                <span>Automatic</span>
+                            </Link>
                         </li>
 
                         {/*  <!-- Divider --> */}
@@ -114,10 +108,10 @@ function Sidebar() {
 
                         {/* <!-- Nav Item - Utilities Collapse Menu --> */}
                         <li className="nav-item">
-                            <a className="nav-link" href=' '>
+                            <Link className="nav-link" to='/configure'>
                                 <i className="fas fa-fw fa-wrench"></i>
-                                <span>Settings</span>
-                            </a>
+                                <span>Configure</span>
+                            </Link>
                         </li>
 
 
