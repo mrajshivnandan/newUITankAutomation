@@ -151,6 +151,7 @@ const SupplyList = () => {
   }, [supplyList]);
 
   useEffect(() => {
+    // showSimpleAlert("Hello there")
     loadSupplyList();
     
   }, []);

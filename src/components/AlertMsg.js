@@ -90,7 +90,7 @@ const AlertMsg = () => {
     <>
       <button type="button" id='showModal' data-bs-toggle="modal" data-bs-target="#modalalert" className="d-none"></button>
 
-      <div id='simplealertmsg' className="alert alert-success position-fixed top-10 start-50 translate-middle d-none" style={{zIndex:1}} role="alert">
+      <div id='simplealertmsg' className="alert alert-success position-fixed top-20 start-50 d-none" style={{zIndex:1}} role="alert">
         A simple success alert—check it out!
       </div>
 

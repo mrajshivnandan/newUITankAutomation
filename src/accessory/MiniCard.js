@@ -1,0 +1,74 @@
+import React from 'react'
+
+const OneTitleCard = (props) => {
+    const borderclass = `card border-left-${props.color} shadow h-100 py-2`
+    const titleclass = `text-xs font-weight-bold text-${props.color} text-uppercase mb-1`;
+    const iconclass = `fas fa-${props.icon?props.icon:'calendar'} fa-2x text-gray-300`;
+  return (
+        <div className="col-xl-3 col-md-6 mb-4">
+            <div className={borderclass}>
+                <div className="card-body">
+                    <div className="row no-gutters align-items-center">
+                        <div className="col mr-2">
+                            <div className={titleclass}>
+                                {props.title}</div>
+                            <div className="h5 mb-0 font-weight-bold text-gray-800">{props.content}</div>
+                        </div>
+                        <div className="col-auto">
+                            <i className={iconclass}></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  )
+}
+const OneProgressCard = (props) => {
+    const borderClass = `card border-left-${props.color} shadow h-100 py-2`
+    const progressClass = `progress-bar bg-${props.color}`;
+    const percent= (props.currVol/props.totalVol)*100;
+  return (
+        <div className="col-lg-6 mb-4 col-12">
+            <div className={borderClass}>
+                <div className="card-body">
+            <div className="row no-gutters align-items-center">
+                <div className="col mr-2">
+                    <div className="text-xs font-weight-bold text-info text-uppercase mb-1">{props.title}
+                    </div>
+                <div className="row no-gutters align-items-center">
+                        <div className="col">
+                            <div className="progress progress-sm mr-2">
+                                <div className={progressClass} role="progressbar" style={{width:`${percent}%`}} aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        <div className="col-auto">
+                            <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">{`${props.currVol}/${props.totalVol}ml`}</div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                </div>
+            </div>
+        </div>
+  )
+}
+
+
+export const MiniCard = () => {
+  return (
+    <div className="row mt-4">
+        <OneTitleCard color= 'primary' title= 'Last Filled' content= 'yesterday' icon= 'calendar'/>
+        <OneTitleCard color= 'success' title= 'Next Scheduled' content= 'not scheduled' icon= 'hourglass-half'/>
+        <OneTitleCard color= 'warning' title= 'Upper tank filled' content= 'not filled' icon= 'fill'/>
+    </div>
+  )
+}
+
+export const MiniProgressCard = () => {
+    return (
+    <div className="row mt-4">
+          <OneProgressCard color= 'info' title= 'Upper tank volume' currVol= {240} totalVol= {1200}/>
+          <OneProgressCard color= 'info' title= 'Lower tank volume' currVol= {694} totalVol= {1200}/>
+      </div>
+    )
+  }

@@ -4,6 +4,7 @@ import appdata,{userInfo} from '../utility/appdata';
 import Cookies from 'js-cookie';
 import {useFormik} from 'formik';
 import loginSchema from '../schemas/loginSchema';
+import { loadSpinner, startSpinner, stopSpinner } from './Spinner';
 import {loadAlerts,showModalAlert,showSimpleAlert} from './AlertMsg';
 // import { loadSpinner, startSpinner, stopSpinner } from './Spinner';
 const buildingImg= require('../images/building.png');
@@ -29,7 +30,7 @@ const Login = () => {
     // try to login user by submitting the form
     const submitUserData =async()=>{
         try {
-            // startSpinner();
+            startSpinner();
         const {email,password}= values;
         if(!email || !password){
             alert("Please fill all the details");
@@ -72,7 +73,8 @@ const Login = () => {
                 //     console.log("Logged in");
                 // }, 100);
             }else{
-                navigate('/verify');
+                navigate('/');
+                // navigate('/verify');
             }
             window.location.reload();
         }
@@ -80,13 +82,13 @@ const Login = () => {
             showModalAlert("Failed to Login");
             console.log(error);
         }finally{
-            // stopSpinner();
+            stopSpinner();
         }
     }
 
     // load alerts and spinner after loading page
     useEffect(()=>{
-        // loadSpinner();
+        loadSpinner();
         loadAlerts();
     },[])
   return (

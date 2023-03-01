@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { userInfo } from '../utility/appdata';
 import { loadUserData } from '../utility/user';
+// import { showSimpleAlert } from './AlertMsg';
 
 let loadcomp;
 const Home = () => {
