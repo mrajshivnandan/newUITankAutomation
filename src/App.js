@@ -39,7 +39,7 @@ function App() {
     <>
     <Navbar/>
     <Routes>
-      <Route exact path="/" element={<BackPage Element= {Home}/>} />
+      <Route exact path="/" element={<Home />} />
       <Route path="/about" element={<BackPage Element= {About}/>} />
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/login" element={<BackPage Element= {Login}/>} />
