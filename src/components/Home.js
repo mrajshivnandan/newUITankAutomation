@@ -121,7 +121,7 @@ const Home = () => {
                 </div>
                 <div class="col-lg-4 col-sm-6">
                     <div class="project">
-                        <img src="https://cdn.shopify.com/s/files/1/1217/2104/products/ultrasonic_720_660_1024x1024.png?v=1528312556" alt="" />
+                        <img src="https://th.bing.com/th/id/OIP.IrvTC5TpLQrppGsZGFzleQHaHa?pid=ImgDet&rs=1" alt="" />
                         <div class="overlay">
                             <div>
                                 <h4 class="text-white">HC-SR04- Ultrasonic sensor</h4>
