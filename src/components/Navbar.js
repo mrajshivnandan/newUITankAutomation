@@ -151,7 +151,7 @@ const Navbar = () => {
             <nav className="navbar navbar-expand-lg bg-light">
                 <div className="container-fluid">
                     <NavLink className="navbar-brand" name='logo' to="/">
-                        <img src={logoImg} alt="Logo" width="30" height="30" className="d-inline-block align-text-top" />
+                        {/* <img src={logoImg} alt="Logo" width="30" height="30" className="d-inline-block align-text-top" /> */}
                         Tank Automation
                     </NavLink>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
