@@ -51,7 +51,7 @@ function Sidebar() {
 
                         {/*  <!-- Nav Item - Pages Collapse Menu --> */}
                         <li className="nav-item">
-                            <Link className="nav-link" to='/user/details'>
+                            <Link className="nav-link" to='/users'>
                                 <i className="fas fa-fw fa-cog"></i>
                                 <span>User Details</span>
                             </Link>

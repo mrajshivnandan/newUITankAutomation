@@ -5,6 +5,7 @@ import Home from './components/Home'
 import About from './components/About';
 import Login from './components/Login';
 import Register from './components/Register';
+import ContactPage from './components/ContactPage';
 import {Routes, Route} from "react-router-dom";
 import ErrorPage from './components/ErrorPage';
 import BackPage from './components/BackPage';
@@ -40,6 +41,7 @@ function App() {
     <Routes>
       <Route exact path="/" element={<BackPage Element= {Home}/>} />
       <Route path="/about" element={<BackPage Element= {About}/>} />
+      <Route path="/contact" element={<ContactPage />} />
       <Route path="/login" element={<BackPage Element= {Login}/>} />
       <Route path="/register" element={<BackPage Element= {Register}/>} />
       <Route path="/forgotPassword" element={<BackPage Element= {ForgotPass}/>} />

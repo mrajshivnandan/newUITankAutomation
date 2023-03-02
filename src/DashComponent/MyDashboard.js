@@ -1,6 +1,11 @@
 import React from "react";
 // import '../App.css'
 // import Footer from "./components/Footer";
+import Register from "../User Details/Register";
+import Home from "../User Details/Home";
+import Edit from "../User Details/Edit";
+import Details from "../User Details/Details";
+
 import Sidebar from "./Sidebar";
 import Topbar from './Topbar';
 import GetData from './GetData';
@@ -12,7 +17,7 @@ import Configure from './Configure';
 import SupplyList from './SupplyList';
 import Dashboard from "./Dashboard";
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 
 function App() {
   return (
@@ -24,7 +29,10 @@ function App() {
       <Topbar />
       <Routes>
         <Route exact path="/" element={<Dashboard />} />
-        <Route exact path="/user/details" element={<div>User Details</div> } />
+        <Route path="/users" element={<Home />} />
+        <Route path="/user/register" element={<Register />} />
+        <Route path="/users/edit" element={<Edit />} />
+        <Route path="/users/view" element={<Details />} />
         <Route path="/profile" element={<Profile/>} />
         <Route path="/getdata" element={<GetData/>} />
         <Route path="/contactus" element={<Contactus/>} />
