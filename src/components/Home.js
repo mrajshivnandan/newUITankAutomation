@@ -31,8 +31,8 @@ const Home = () => {
                         <h5 class="mb-0 mt-4">Raj Mishra</h5>
                         <p>Programmer</p>
                         <div class="social-icons">
-                        <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
                             <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
                         </div>
                     </div>
@@ -110,7 +110,7 @@ const Home = () => {
             <div class="row g-3">
                 <div class="col-lg-4 col-sm-6">
                     <div class="project">
-                        <img src="https://th.bing.com/th/id/OIP.ATjBP0vDu-IEhh-8Y1XFUAHaFj?pid=ImgDet&rs=1" alt="" />
+                        <img class="img-fluid" src="https://th.bing.com/th/id/OIP.ATjBP0vDu-IEhh-8Y1XFUAHaFj?pid=ImgDet&rs=1" alt="" />
                         <div class="overlay">
                             <div>
                                 <h4 class="text-white">ESP32 Nodemcu</h4>
@@ -121,7 +121,7 @@ const Home = () => {
                 </div>
                 <div class="col-lg-4 col-sm-6">
                     <div class="project">
-                        <img src="https://th.bing.com/th/id/OIP.IrvTC5TpLQrppGsZGFzleQHaHa?pid=ImgDet&rs=1" alt="" />
+                        <img class="img-fluid" src="https://th.bing.com/th/id/OIP.IrvTC5TpLQrppGsZGFzleQHaHa?pid=ImgDet&rs=1" alt="" />
                         <div class="overlay">
                             <div>
                                 <h4 class="text-white">HC-SR04- Ultrasonic sensor</h4>
@@ -132,7 +132,7 @@ const Home = () => {
                 </div>
                 <div class="col-lg-4 col-sm-6">
                     <div class="project">
-                        <img src="https://th.bing.com/th/id/OIP.LLbtMqMmpSGmn_c9BEsbNQHaHa?pid=ImgDet&rs=1" alt="" />
+                        <img class="img-fluid" src="https://th.bing.com/th/id/OIP.LLbtMqMmpSGmn_c9BEsbNQHaHa?pid=ImgDet&rs=1" alt="" />
                         <div class="overlay">
                             <div>
                                 <h4 class="text-white">Solenoid valve 18v</h4>
@@ -143,7 +143,7 @@ const Home = () => {
                 </div>
                 <div class="col-lg-4 col-sm-6">
                     <div class="project">
-                        <img src="https://th.bing.com/th/id/OIP.1B-2Sa0HcSSgDTwAP3D7ygHaHa?pid=ImgDet&rs=1" alt=""/>
+                        <img class="img-fluid" src="https://th.bing.com/th/id/OIP.1B-2Sa0HcSSgDTwAP3D7ygHaHa?pid=ImgDet&rs=1" alt=""/>
                         <div class="overlay">
                             <div>
                                 <h4 class="text-white">DC Water Pump</h4>
@@ -154,7 +154,7 @@ const Home = () => {
                 </div>
                 <div class="col-lg-4 col-sm-6">
                     <div class="project">
-                        <img src="https://th.bing.com/th/id/OIP.fJpguE7TKM1xxbI07hWWSQHaHa?pid=ImgDet&rs=1" alt=""/>
+                        <img class="img-fluid" src="https://th.bing.com/th/id/OIP.fJpguE7TKM1xxbI07hWWSQHaHa?pid=ImgDet&rs=1" alt=""/>
                         <div class="overlay">
                             <div>
                                 <h4 class="text-white">YF-S401- Flow sensor</h4>
@@ -165,7 +165,7 @@ const Home = () => {
                 </div>
                 <div class="col-lg-4 col-sm-6">
                     <div class="project">
-                        <img src="https://th.bing.com/th/id/OIP.HoLb9aOnAo_3W1V1mI1GNQHaHa?pid=ImgDet&rs=1" alt=""/>
+                        <img class="img-fluid" src="https://th.bing.com/th/id/OIP.HoLb9aOnAo_3W1V1mI1GNQHaHa?pid=ImgDet&rs=1" alt=""/>
                         <div class="overlay">
                             <div>
                                 <h4 class="text-white">5V Single-Channel Relay Module</h4>
@@ -177,6 +177,40 @@ const Home = () => {
             </div>
         </div>
     </section>
+
+    <section id="portfolio">
+        <div class="container-fluid">
+            <div class="row mb-5">
+                <div class="col-md-8 mx-auto text-center">
+                    <h6 class="text-primary">ASSEST</h6>
+                    <h1>Components Used</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur nisi necessitatibus repellat distinctio eveniet eaque fuga
+                        in cumque optio consectetur harum vitae debitis sapiente praesentium aperiam aut</p>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="box -item col-lg-4 col-sm-6">
+                    <div class="flip-box">
+                        <div class="flip-box-front text-center">
+                            <div class="inner colo-white">
+                                <div class="flip-box-header">
+                                    <h3 class="flip-box-header">5V Single-Channel Relay Module</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flip-box-back text-center">
+                            <div class="inner colo-white">
+                                <div class="flip-box-header">
+                                    <p>Lorem ipsum dolor sit amet consectetur nisi necessitatibus repellat distinctio eveniet eaque fuga
+                        in cumque optio consectetur harum vitae debitis sapiente praesentium aperiam aut</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>        
     </>
   )
 }

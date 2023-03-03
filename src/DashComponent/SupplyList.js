@@ -9,8 +9,8 @@ import { showSimpleAlert } from '../components/AlertMsg';
 // add or remove list items
 const SupplyList = () => {
   const [supplyList, setSupplyList] = useState([
-    { room: 1, name: 'Room1', supplyOn: false },
-    { room: 2, name: 'Room2', supplyOn: false },
+    { room: 1, name: 'Room1', status: "inactive" },
+    { room: 2, name: 'Room2', status: "inactive" },
   ]);
   const [seed, setSeed] = useState(1);
   const reset = () => {
@@ -21,7 +21,7 @@ const SupplyList = () => {
   const manageList = (type, value) => {
     let roomlist = supplyList;
     if (type === "addListItem") {
-      roomlist.push({ room: value.room, name: value.name, supplyOn: false });
+      roomlist.push({ value});
       setSupplyList(roomlist);
     } else if (type === "removeListItem") {
       roomlist = roomlist.filter((e) => { return e.room !== value.room && e.name !== value.name });
@@ -30,7 +30,7 @@ const SupplyList = () => {
 
       const index = roomlist.findIndex((obj => obj.room === value.room));
       if (index !== -1) {
-        roomlist[index] = { ...roomlist[index], supplyOn: value.supplyOn };
+        roomlist[index] = { ...roomlist[index], status: value.status };
         // console.log(roomlist[index]);
       }
       setSupplyList(roomlist)
@@ -60,28 +60,28 @@ const SupplyList = () => {
     validationSchema: roomSchema,
     validate: checkRoom,
     onSubmit: (values, action) => {
-      manageList("addListItem", { room: values.room, name: values.name });
+      manageList("addListItem", values);
       action.resetForm();
     }
   })
 
-  //update supplyOn value on clicking checkbox
+  //update status value on clicking checkbox
   const toggleSupply = (room, name, isChecked,evt) => {
     // console.log(room, name, isChecked);
-    manageList("updateListItem", { room, name, supplyOn: isChecked });
+    manageList("updateListItem", { room, name, status: isChecked?'active':'inactive' });
     reset();
     // evt.stopPropagation();
 
   }
 
   // list item to be displayed
-  const sList = (room, name,supplyOn,toggleSupply) => {
+  const sList = (room, name,status,toggleSupply) => {
     return (
       <div key={room} className="row g-3 mb-4">
         <li className="list-group-item d-flex">
           <div className="col-2 col-sm-1">
             <input className="form-check-input me-1" type="checkbox" value="" id={"rm-" + room}
-              checked={supplyOn} onChange={(e) => { toggleSupply(room, name, e.target.checked,e); }} />
+              checked={status==='active'} onChange={(e) => { toggleSupply(room, name, e.target.checked,e); }} />
           </div>
           <div className="col-1" >
             <label className="form-check-label roomno" htmlFor={"rm-" + room} >{room}</label>
@@ -108,14 +108,16 @@ const SupplyList = () => {
   //fetch supply list from database
   const loadSupplyList= async()=>{
     const slist= await getSupplyList();
-    setSupplyList(slist);
+    if(slist){
+      setSupplyList(slist);
+    }
     // console.log(slist);
   }
 
   //select all checkbox of supply list
   const selectAll= async()=>{
     let slist= supplyList.map((e)=>{
-      return {...e,supplyOn:true};
+      return {...e,status:"active"};
     });
     setSupplyList(slist);
 
@@ -124,7 +126,7 @@ const SupplyList = () => {
   //deselect all checkbox of supply list
   const deselectAll= async()=>{
     let slist= supplyList.map((e)=>{
-      return {...e,supplyOn:false};
+      return {...e,status:"inactive"};
     });
     setSupplyList(slist);
   }
@@ -188,7 +190,7 @@ const SupplyList = () => {
 
       <ReactSortable key={seed} list={supplyList} setList={setSupplyList} ghostClass='bg-info'>
         {supplyList.map((item) => (
-          sList(item.room, item.name,item.supplyOn,toggleSupply)
+          sList(item.room, item.name,item.status,toggleSupply)
         ))}
       </ReactSortable>
       

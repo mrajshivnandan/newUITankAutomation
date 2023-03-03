@@ -155,6 +155,7 @@ export const fetchEspConfigData = async () => {
 // saves the supply list to the database
 export const saveSupplyList = async (supplyList) => {
   try {
+    // console.log("cookies: "+Cookies.get('jwtoken'));
     const res = await fetch(appdata.baseUrl + "/saveSupplyList", {
       method: "POST",
       headers: {
@@ -166,16 +167,17 @@ export const saveSupplyList = async (supplyList) => {
       })
     });
 
+    const data = await res.json();
     if (res.status > 201) {
+      console.log('res: '+data);
       throw new Error(res.error);
     }
-    const data = await res.json();
     console.log(data);
 
     return data;
 
   } catch (error) {
-    console.log(error);
+    console.log("error: "+error);
     return false;
   }
 }
@@ -187,12 +189,13 @@ export const getSupplyList = async () => {
   const res = await fetchApi("/getSupplyList")
   
     console.log("supplyList: ");
-    console.log(res.supplyList);
-    if(res){
+    console.log(res);
+    if(res.supplyList){
       loadProgBar();
       return res.supplyList.roomList;
+    }else{
+      return false;
     }
-    return false;
 }
 
 // gets the sensor data and set it to states
