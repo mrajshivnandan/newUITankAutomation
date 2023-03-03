@@ -11,13 +11,12 @@ import Topbar from './Topbar';
 import GetData from './GetData';
 import ScheduleWater from './ScheduleWater'
 import Profile from './Profile';
-import BackPage from '../components/BackPage';
 import Contactus from './Contactus'
 import Configure from './Configure';
 import SupplyList from './SupplyList';
 import Dashboard from "./Dashboard";
 
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
 
 function App() {
   return (

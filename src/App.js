@@ -14,6 +14,7 @@ import VerificationPage from './components/VerificationPage';
 import ForgotPass from './components/ForgotPass';
 import { fetchEspConfigData } from './utility/espFucntion';
 import MyDashboard from './DashComponent/MyDashboard';
+import Spinner from './components/Spinner';
 
 export const userContext = createContext();
 function App() {
@@ -30,6 +31,7 @@ function App() {
     
     <>
     <AlertMsg/>
+    <Spinner/>
     {sessionStorage.getItem('loggedin') ? 
     
     <MyDashboard /> 

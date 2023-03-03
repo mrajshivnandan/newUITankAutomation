@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { ReactSortable } from "react-sortablejs";
 import { getSupplyList, saveSupplyList } from '../utility/espFucntion';
 import { showSimpleAlert } from '../components/AlertMsg';
+import { CurrRow } from '../accessory/CurrTable';
 
 // add or remove list items
 const SupplyList = () => {
@@ -74,29 +75,28 @@ const SupplyList = () => {
 
   }
 
-  // list item to be displayed
-  const sList = (room, name,supplyOn,toggleSupply) => {
-    return (
-      <div key={room} className="row g-3 mb-4">
-        <li className="list-group-item d-flex">
-          <div className="col-2 col-sm-1">
-            <input className="form-check-input me-1" type="checkbox" value="" id={"rm-" + room}
+const sList = (room, name,supplyOn,toggleSupply) => {
+  return (
+      <div key={room} className= 'list-group-item d-flex'>
+          <div className="col-2">
+            <input className="form-check-input" type="checkbox" value="" id={"rm-" + room}
               checked={supplyOn} onChange={(e) => { toggleSupply(room, name, e.target.checked,e); }} />
           </div>
-          <div className="col-1" >
+          <div className='col-2'>
             <label className="form-check-label roomno" htmlFor={"rm-" + room} >{room}</label>
           </div>
-          <div className="col-8 col-sm-9">
-            {" " + name}
+          <div className="col-4"> {"" + name}</div>
+          <div className="col-2">
+            <span className='m-auto hover-pointer'><i class="fas fa-edit"></i></span>
           </div>
-          <div className="col-1 d-flex">
+          <div className="col-2">
             <span className='m-auto hover-pointer' onClick={() => manageList(
-              "removeListItem", { room, name })} style={{ cursor: 'pointer' }}>🗑️</span>
+              "removeListItem", { room, name })} style={{ cursor: 'pointer' }}><i class="fas fa-trash-alt"></i></span>
           </div>
-        </li>
       </div>
-    );
-  }
+  )
+}
+
 
   //update supplylist to database
   const saveChanges= async()=>{
@@ -151,6 +151,7 @@ const SupplyList = () => {
   }, [supplyList]);
 
   useEffect(() => {
+    // showSimpleAlert("Hello there")
     loadSupplyList();
     
   }, []);
@@ -186,11 +187,26 @@ const SupplyList = () => {
       <button className='btn btn-secondary me-2 mb-2' type='button' onClick={sortdec}>Sort Dec</button>
       </div>
 
-      <ReactSortable key={seed} list={supplyList} setList={setSupplyList} ghostClass='bg-info'>
-        {supplyList.map((item) => (
-          sList(item.room, item.name,item.supplyOn,toggleSupply)
-        ))}
-      </ReactSortable>
+
+<div class="container-fluid">
+<div className="card">
+  <div class="list-group">
+          <div class="list-group-item d-flex">
+              <div class="col-2">Active</div>
+              <div class="col-2">RoomNo</div>
+              <div class="col-4">Name</div>
+              <div class="col-2">Edit</div>
+              <div class="col-2">Delete</div>
+          </div>
+      </div>
+    <ReactSortable className='list-group' key={seed} list={supplyList} setList={setSupplyList} ghostClass='bg-info'>
+      {supplyList.map((item) => (
+        sList(item.room, item.name,item.supplyOn,toggleSupply)
+      ))}
+    </ReactSortable>
+</div>
+</div>
+
       
       <button className='btn btn-secondary me-2' type='button' onClick={loadSupplyList} >Cancel</button>
       <button className='btn btn-primary' type='button' onClick={saveChanges} >Save</button>

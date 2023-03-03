@@ -391,11 +391,11 @@ const ScheduleWater = () => {
         <>
 
             <div id="row text-center">
-                <div className='m-4 mx-auto d-flex flex-column pe-2 w-80 col-sm-11 col-md-10 col-xl-8'>
+                <div className='m-4 mx-auto d-flex flex-column pe-2 w-80 col-lg-10 col-xl-8'>
 
                     <h2 className='text-center'>Schedule Supply</h2>
 
-                    <div className='container d-flex flex-column  content-align-center'>
+                    <div className='mx-3'>
                         <div className='mb-2'>Set Motor start time :</div>
                         <input className="mx-3 form-control mb-2" type="datetime-local" onChange={e => setScheduleTime({ ...scheduleTime, startTime: e.target.value })}
                             value={scheduleTime.startTime} id="motorStartTime" name="motorStartTime" />
