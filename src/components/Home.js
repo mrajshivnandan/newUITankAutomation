@@ -1,21 +1,13 @@
 import React from 'react'
 import '../styles/Home.css'
 
+// import { userInfo } from '../utility/appdata';
+// import { loadUserData } from '../utility/user';
+// import { showSimpleAlert } from './AlertMsg';
+
 const Home = () => {
   return (
     <>
-    <div class="hero vh-100 d-flex align-items-center" id="home">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-7 mx-auto text-center">
-                    <h1 class="fs-10 display-4 text-white">Tank Automation</h1>
-                    <p class="fs-5 text-white my-3">Tank Automation provides equitable water supply, reliability, completely visibility into your tanks, operate automatically, flexibility and it reduces the wastage of water</p>
-                    <a href="#" class="btn me-2 btn-primary">Contact Us </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <section id="team" >
         <div class="container">
             <div class="row mb-5">
