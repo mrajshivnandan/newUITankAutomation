@@ -53,14 +53,19 @@ export const showSimpleAlert=(msg,bgcolor= 'success')=>{
   }, 5000);
 }
 
-export const showModalAlert=(msg,buttonMsg= undefined)=>{
+export const showModalAlert=(msg,buttonMsg= undefined,btnColor='success')=>{
   if(!modalalertmsg || !modalbtn || !modalMsgBtn) return;
+  if(btnColor){
+    btnColor= 'btn-'+convertColor(btnColor);
+    modalMsgBtn.classList.add(btnColor);
+  }
   if(buttonMsg){
     modalMsgBtn.classList.remove('d-none');
     modalMsgBtn.innerText = buttonMsg;
   }else{
     modalMsgBtn.classList.add('d-none');
     modalMsgBtn.innerText = 'Confirm';
+    modalMsgBtn.classList.remove(btnColor);
   }
   modalalertmsg.innerText = msg;
   modalbtn.click();

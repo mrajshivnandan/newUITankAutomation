@@ -1,9 +1,10 @@
 import { useFormik } from 'formik'
 import React, {useState, useEffect} from 'react'
-import { NavLink} from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
 import { getSupplyList, saveSupplyList } from '../utility/espFucntion';
 import { showSimpleAlert } from '../components/AlertMsg';
+import {addata} from './context/ContextProvider'
 
 const Register = () => {
 
@@ -62,6 +63,18 @@ const Register = () => {
       const saved = await saveSupplyList(supplyList);
       if(saved) showSimpleAlert("List Updated Successfully")
     }
+    // } else if (type === "removeListItem") {
+    //   roomlist = roomlist.filter((e) => { return e.room !== value.room && e.name !== value.name });
+    //   setSupplyList(roomlist)
+    // } else if (type === "updateListItem") {
+
+    //   const index = roomlist.findIndex((obj => obj.room === value.room));
+    //   if (index !== -1) {
+    //     roomlist[index] = { ...roomlist[index], supplyOn: value.supplyOn };
+    //     // console.log(roomlist[index]);
+    //   }
+    //   setSupplyList(roomlist)
+    // }
   }
   const saveChanges= async()=>{
     // console.log((supplyList[0]));

@@ -76,29 +76,27 @@ const SupplyList = () => {
   }
 
   // list item to be displayed
-  const sList = (room, name,status,toggleSupply) => {
+  const sList = (room, name,supplyOn,toggleSupply) => {
     return (
-      <div key={room} className="row g-3 mb-4">
-        <div className="list-group-item d-flex">
-          <div className="col-2 col-sm-1">
-            <input className="form-check-input me-1" type="checkbox" value="" id={"rm-" + room}
-              checked={status==='active'} onChange={(e) => { toggleSupply(room, name, e.target.checked,e); }} />
-          </div>
-          <div className='col-2'>
-            <label className="form-check-label roomno" htmlFor={"rm-" + room} >{room}</label>
-          </div>
-          <div className="col-4"> {"" + name}</div>
-          <div className="col-2">
-            <span className='m-auto hover-pointer'><i class="fas fa-edit"></i></span>
-          </div>
-          <div className="col-2">
-            <span className='m-auto hover-pointer' onClick={() => manageList(
-              "removeListItem", { room, name })} style={{ cursor: 'pointer' }}><i class="fas fa-trash-alt"></i></span>
-          </div>
-      </div>
-      </div>
-  )
-}
+        <div key={room} className= 'list-group-item d-flex'>
+            <div className="col-2">
+              <input className="form-check-input" type="checkbox" value="" id={"rm-" + room}
+                checked={supplyOn} onChange={(e) => { toggleSupply(room, name, e.target.checked,e); }} />
+            </div>
+            <div className='col-2'>
+              <label className="form-check-label roomno" htmlFor={"rm-" + room} >{room}</label>
+            </div>
+            <div className="col-4"> {"" + name}</div>
+            <div className="col-2">
+              <span className='m-auto hover-pointer'><i class="fas fa-edit"></i></span>
+            </div>
+            <div className="col-2">
+              <span className='m-auto hover-pointer' onClick={() => manageList(
+                "removeListItem", { room, name })} style={{ cursor: 'pointer' }}><i class="fas fa-trash-alt"></i></span>
+            </div>
+        </div>
+    )
+  }
 
 
   //update supplylist to database
@@ -193,10 +191,10 @@ const SupplyList = () => {
       </div>
 
 
-<div class="container-fluid">
-<div className="card">
-  <div class="list-group">
-          <div class="list-group-item d-flex">
+<div class="container-fluid px-0 px-lg-4">
+<div className="card" style={{overflow:'scroll'}}>
+  <div class="list-group" style={{minWidth:'600px'}}>
+          <div class="list-group-item d-flex" >
               <div class="col-2">Active</div>
               <div class="col-2">RoomNo</div>
               <div class="col-4">Name</div>
@@ -204,7 +202,7 @@ const SupplyList = () => {
               <div class="col-2">Delete</div>
           </div>
       </div>
-    <ReactSortable className='list-group' key={seed} list={supplyList} setList={setSupplyList} ghostClass='bg-info'>
+    <ReactSortable className='list-group' key={seed} list={supplyList} setList={setSupplyList} ghostClass='bg-info' style={{display:'block',minWidth:'600px'}}>
       {supplyList.map((item) => (
         sList(item.room, item.name,item.status,toggleSupply)
       ))}
