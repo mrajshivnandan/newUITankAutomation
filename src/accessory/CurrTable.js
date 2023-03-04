@@ -48,11 +48,6 @@ export const CurrTable = () => {
                         </tbody>
                     </table>
                 </div>
-                {/* <div className="d-block text-center card-footer">
-                    <button className="mr-2 btn-icon btn-icon-only btn btn-outline-danger">
-                        <i className="fas fa-trash btn-icon-wrapper"> </i></button>
-                    <button className="btn-wide btn btn-success">Save</button>
-                </div> */}
             </div>
 
         </div>

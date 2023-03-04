@@ -1,11 +1,76 @@
-import React from 'react'
-import { CurrTable } from '../accessory/CurrTable';
-import { MiniCard, MiniProgressCard, OneProgressCard } from '../accessory/MiniCard';
-// import { CircularProgressbar,buildStyles } from 'react-circular-progressbar';
+import React, { useContext, useEffect, useRef, useState } from 'react'
+// import { CurrTable } from '../accessory/CurrTable';
+// import { MiniCard, OneProgressCard } from '../accessory/MiniCard';
 import { CardFill} from '../accessory/progressbar/FillProgress';
+import { EspContext } from './MyDashboard';
+import { fetchInfo } from '../utility/appdata';
+import { loadProgBar, loadSensorData } from '../utility/espFucntion';
+import { useNavigate } from 'react-router-dom';
+import { MiniCard, OneProgressCard } from '../accessory/MiniCard';
 // let percentage = 44;
 
 const Dashboard = () => {
+  const {espData,setEspData} = useContext(EspContext);
+  const navigate = useNavigate();
+  const [repeatedData, setRepeatedData] = useState(false);
+
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+        ref.current = value; //assign the value of ref to the argument
+    }, [value]); //this code will run when the value of 'value' changes
+    return ref; //in the end, return the current ref value.
+}
+const prevData = usePrevious(espData.index);
+
+  useEffect(() => {
+    
+    let loadDataInterval;
+    let repeatData = 0;
+    if (sessionStorage.getItem('loggedin')) {
+        console.log("started interval ");
+        loadSensorData(setEspData);
+        loadProgBar();
+        loadDataInterval = setInterval(() => {
+            loadSensorData(setEspData).then((sent) => {
+                // console.log(fetchInfo.fetchTry,fetchInfo.interval,sent);
+                if (sent.index === prevData.current) {
+                    repeatData++;
+                    if (repeatData > 5) {
+                        setRepeatedData(true);
+                    }
+                } else {
+                    repeatData = 0;
+                    setRepeatedData(false)
+                }
+                console.log(sent.index, prevData.current, repeatData);
+                if (sent) {
+                    if (fetchInfo.fetchTry >= 20) {
+                        fetchInfo.fetchTry = 0;
+                    } else if (fetchInfo.fetchTry > 0) {
+                        fetchInfo.fetchTry = fetchInfo.fetchTry - 1;
+                    }
+                } else {
+                    if (fetchInfo.fetchTry >= 20) {
+                        clearInterval(loadDataInterval);
+                    } else {
+                        fetchInfo.fetchTry = fetchInfo.fetchTry + 1;
+                    }
+                }
+            })
+        }, fetchInfo.interval);
+
+    } else {
+        navigate('/login')
+    }
+
+    return () => {
+        console.log("stopped interval ");
+        clearInterval(loadDataInterval);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  
   return (
     <>
     <div id='content-wrapper' className='d-flex flex-column'>
@@ -13,6 +78,7 @@ const Dashboard = () => {
       {/*  <!-- Page Heading --> */}
       <div className="d-sm-flex align-items-center justify-content-between">
         <h1 className="h3 mb-0 text-gray-800">Dashboard</h1>
+          <p className='text-center text-warning'>{repeatedData ? "This may be some old data" : ""}</p>
         <a href="/" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
             <i className="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
         </div>
@@ -22,20 +88,20 @@ const Dashboard = () => {
 
         <div className='mt-4 row'>
           <div className='col-lg-6 col-12 text-center'>
-            <CardFill percent= {55} title='UPPER TANK'/>
+            <CardFill percent= {espData.upperTank} title='UPPER TANK'/>
           </div>
           <div className='col-lg-6 col-12 text-center'>
-            <CardFill percent= {40} title='LOWER TANK'/>
+            <CardFill percent= {espData.lowerTank} title='LOWER TANK'/>
           </div>
         </div>
 
                       
     <div className="row mt-4">
-          <OneProgressCard color= 'info' title= 'Upper tank volume' currVol= {240} totalVol= {1200}/>
-          <OneProgressCard color= 'info' title= 'Lower tank volume' currVol= {694} totalVol= {1200}/>
+          <OneProgressCard color= 'info' title= 'Upper tank volume' currVol= {espData.UTVolume} totalVol= {1200}/>
+          <OneProgressCard color= 'info' title= 'Lower tank volume' currVol= {espData.LTVolume} totalVol= {1200}/>
       </div>
 
-        <CurrTable/>
+        {/* <CurrTable/> */}
       </div>
       </div>
     </>

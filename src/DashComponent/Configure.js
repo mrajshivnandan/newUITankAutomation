@@ -20,7 +20,7 @@ const configureSchema = () => Yup.object({
     maxFill:Yup.number().required("please enter max fill level of tank").min(10,levelRangeError).max(100,levelRangeError),
 })
 
-const ScheduleWater = () => {
+const Configure = () => {
     const navigate = useNavigate();
 
     const initValue = {
@@ -67,6 +67,7 @@ const ScheduleWater = () => {
         loadSpinner();
         if (sessionStorage.getItem('loggedin')) {
             loadEspConfigData().then((data)=>{
+                if(data){
                 setFieldValue('UTDepth', data.udata.UTDepth);
                 setFieldValue('LTDepth', data.udata.LTDepth);
                 setFieldValue('UTShape', data.udata.UTShape);
@@ -77,6 +78,9 @@ const ScheduleWater = () => {
                 setFieldValue('LTR1', data.udata.LTR1);
                 setFieldValue('LTR2', data.udata.LTR2);
                 setFieldValue('maxFill', data.udata.maxFill);
+                }else{
+                    console.log("No esp Config data!");
+                }
             });
         } else {
             navigate('/login')
@@ -200,4 +204,4 @@ const ScheduleWater = () => {
     )
 }
 
-export default ScheduleWater
+export default Configure

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext, useState } from 'react'
 // import '../App.css'
 // import Footer from "./components/Footer";
 import Register from "../User Details/Register";
@@ -18,10 +18,24 @@ import Dashboard from "./Dashboard";
 
 import { Routes, Route} from "react-router-dom";
 
-function App() {
+let initValue = {
+  index: 0,
+  upperTank: 0,
+  lowerTank: 0,
+  UTVolume: 0,
+  LTVolume: 0,
+  buildLed: false,
+  motorOn: false,
+  tankFull: false
+}
+export const EspContext = createContext("");
+function MyDashboard() {
+  const [espData, setEspData] = useState(initValue);
   return (
+    
+    <EspContext.Provider value={{espData,setEspData}}>
     <div className="mysidebar">
-    <div class=" bg-gradient-primary">
+    <div className=" bg-gradient-primary">
       <Sidebar />
       </div>
       <main className="content ">
@@ -41,7 +55,8 @@ function App() {
       </Routes>
       </main>
     </div>
+</EspContext.Provider>
   );
 }
 
-export default App;
+export default MyDashboard;

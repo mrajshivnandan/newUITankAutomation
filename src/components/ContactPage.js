@@ -109,8 +109,8 @@ const ContactPage = () => {
                         <input type="number" name="mobile" className="form-control" onChange={handleChange} value={values.mobile} required />
                     </div>
                     <div className="col-12 mb-3">
-                        <label for="exampleFormControlTextarea1" class="form-label">Message</label>
-                        <textarea class="form-control" name="message" onChange={handleChange} value={values.message} rows="3"></textarea>
+                        <label for="exampleFormControlTextarea1" className="form-label">Message</label>
+                        <textarea className="form-control" name="message" onChange={handleChange} value={values.message} rows="3"></textarea>
                     </div>
                     <div className="col-12 text-center">
                       <button type="submit" className="btn btn-primary mt-3">Submit</button>

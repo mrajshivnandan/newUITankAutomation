@@ -1,7 +1,7 @@
 import '../App.css'
 import React, { useEffect, useReducer, useState } from 'react'
 //import {loadAlerts,showModalAlert} from './AlertMsg';
-import { getHomeData, getSensorData, getSupplyList, updateHomeData} from '../utility/espFucntion';
+import { getHomeData, getSensorData, getSupplyList, updateHomeData } from '../utility/espFucntion';
 import { useNavigate } from 'react-router-dom';
 import { showSimpleAlert } from '../components/AlertMsg';
 
@@ -13,8 +13,8 @@ let timerMsg = "";
 const ScheduleWater = () => {
     const navigate = useNavigate();
     const [scheduleTime, setScheduleTime] = useState(initSchedule);
-    const [waterVolume, setWaterVolume] = useState({currUTVolume:0, currLTVolume:0, prevUTVolume:0, prevLTVolume:0 });
-    const [supplyBy,setsupplyBy] = useState('time');
+    const [waterVolume, setWaterVolume] = useState({ currUTVolume: 0, currLTVolume: 0, prevUTVolume: 0, prevLTVolume: 0 });
+    const [supplyBy, setsupplyBy] = useState('time');
     const [homeData, setHomeData] = useState({ roomNo: 0, flowSpeed: 0, waterPassed: 0, supplyOn: false });
     const [supplyList, setSupplyList] = useState([
         { room: 1, name: 'Room1', supplyOn: false, supplyStatus: 0, waterPassed: 0 },
@@ -23,8 +23,8 @@ const ScheduleWater = () => {
 
     // supplyReducer for maintaining timer
     const supplyReducer = (supplyInfo, action) => {
-        let {startAfter,remainTime,timerOn,remainRoom,remainQuantity,supplyType}
-        = supplyInfo;
+        let { startAfter, remainTime, timerOn, remainRoom, remainQuantity, supplyType }
+            = supplyInfo;
         switch (action.type) {
             case "decStartAfter":
                 startAfter = startAfter - 1;
@@ -70,19 +70,22 @@ const ScheduleWater = () => {
         }
         return { startAfter, remainTime, remainQuantity, remainRoom, timerOn, supplyType };
     }
-    const [supplyInfo, setSupplyInfo] = useReducer(supplyReducer, { startAfter: 0, remainTime: 0,remainQuantity:0, remainRoom: 0, timerOn: false,supplyType: 'T' });
+    const [supplyInfo, setSupplyInfo] = useReducer(supplyReducer, { startAfter: 0, remainTime: 0, remainQuantity: 0, remainRoom: 0, timerOn: false, supplyType: 'T' });
 
-    
+
     // load supply list from database
     const loadSupplyList = async () => {
         const slist = await getSupplyList();
+        console.log(slist);
         let roomList = [];
         for (let i = 0; i < slist.length; i++) {
-            if (slist[i].supplyOn) {
-                roomList.push({ ...slist[i], supplyStatus: 0, waterPassed: 0 });
+            if (slist[i].status === 'active') {
+                roomList.push({ ...slist[i], supplyOn: slist[i].status === 'active', supplyStatus: 0, waterPassed: 0 });
             }
+        } console.log(roomList);
+        if (roomList) {
+            setSupplyList(roomList)
         }
-        setSupplyList(roomList)
         // console.log(slist);
         return roomList;
     }
@@ -90,18 +93,19 @@ const ScheduleWater = () => {
     // update waterpassed from server
     const updateWaterPassed = async () => {
         // setTimeout(async () => {
-            const roomList = await getHomeData();
-            let slist = [...supplyList];
-            // console.log(slist);
-            for (let i = 0; i < roomList.length; i++) {
-                if (roomList[i].roomNo === slist[0].room && roomList[i].waterPassed) {
-                    slist[0].waterPassed = roomList[i].waterPassed;
-                } else if (roomList[i].roomNo === slist[1].room && roomList[i].waterPassed) {
-                    slist[1].waterPassed = roomList[i].waterPassed;
-                }
+        const roomList = await getHomeData();
+        let slist = [...supplyList];
+        console.log(slist);
+        for (let i = 0; i < roomList.length; i++) {
+            if (slist[0] && roomList[i].roomNo === slist[0].room && roomList[i].waterPassed) {
+                slist[0].waterPassed = roomList[i].waterPassed;
+            } else if (slist[1] && roomList[i].roomNo === slist[1].room && roomList[i].waterPassed) {
+                slist[1].waterPassed = roomList[i].waterPassed;
             }
+        }
+        if (slist)
             setSupplyList(slist);
-            // console.log("Supply list updated ");
+        // console.log("Supply list updated ");
         // }, 1500);
     }
 
@@ -142,12 +146,12 @@ const ScheduleWater = () => {
 
         setSupplyInfo({ type: "setRemainRoom", value: supplyList.length });
         setSupplyInfo({ type: "setStartAfter", value: timeDiff });
-        if(supplyBy==='time'){
+        if (supplyBy === 'time') {
             setSupplyInfo({ type: "setRemainTime", value: Number.parseInt(stopAfter * 60) });
-        }else{
+        } else {
             setSupplyInfo({ type: "setRemainQuantity", value: stopAfter });
-            getSensorData().then((data)=>{
-                setWaterVolume({currUTVolume:data.UTVolume,currLTVolume:data.LTVolume, prevUTVolume:data.UTVolume, prevLTVolume:data.LTVolume })
+            getSensorData().then((data) => {
+                setWaterVolume({ currUTVolume: data.UTVolume, currLTVolume: data.LTVolume, prevUTVolume: data.UTVolume, prevLTVolume: data.LTVolume })
             })
         }
         setSupplyInfo({ type: "setTimerOn", value: true });
@@ -167,12 +171,12 @@ const ScheduleWater = () => {
                         setSupplyInfo({ type: "decStartAfter" });
                         if (supplyInfo.remainTime <= 0) {
                             // updateSensorData({ motorOn: true });
-                            if(supplyBy==='quantity'){
-                                getSensorData().then((data)=>{
-                                    setWaterVolume({currUTVolume:data.UTVolume,currLTVolume:data.LTVolume, prevUTVolume:data.UTVolume, prevLTVolume:data.LTVolume });
-                                    if(!(data.currUTVolume>=0 && data.currUTVolume<=1400)){
-                                        getSensorData().then((data)=>{
-                                            setWaterVolume({currUTVolume:data.UTVolume,currLTVolume:data.LTVolume, prevUTVolume:data.UTVolume, prevLTVolume:data.LTVolume })
+                            if (supplyBy === 'quantity') {
+                                getSensorData().then((data) => {
+                                    setWaterVolume({ currUTVolume: data.UTVolume, currLTVolume: data.LTVolume, prevUTVolume: data.UTVolume, prevLTVolume: data.LTVolume });
+                                    if (!(data.currUTVolume >= 0 && data.currUTVolume <= 1400)) {
+                                        getSensorData().then((data) => {
+                                            setWaterVolume({ currUTVolume: data.UTVolume, currLTVolume: data.LTVolume, prevUTVolume: data.UTVolume, prevLTVolume: data.LTVolume })
                                         });
                                     }
                                 });
@@ -182,7 +186,7 @@ const ScheduleWater = () => {
                         }
                     }
                 }, 1000);
-                }
+            }
         } else if (supplyInfo.remainTime >= 0 && supplyInfo.remainRoom >= 0 && supplyInfo.timerOn) {
             const currentRoom = supplyList[supplyList.length - supplyInfo.remainRoom];
             if (currentRoom) {
@@ -234,14 +238,14 @@ const ScheduleWater = () => {
                     stopTimer();
                 }
             }, 1000);
-        }else if (supplyInfo.remainQuantity >= 0 && supplyInfo.remainRoom >= 0 && supplyInfo.timerOn) {
+        } else if (supplyInfo.remainQuantity >= 0 && supplyInfo.remainRoom >= 0 && supplyInfo.timerOn) {
             const currentRoom = supplyList[supplyList.length - supplyInfo.remainRoom];
-            
-            getSensorData().then((data)=>{
-                setWaterVolume({...waterVolume, currUTVolume:data.UTVolume,currLTVolume:data.LTVolume})
+
+            getSensorData().then((data) => {
+                setWaterVolume({ ...waterVolume, currUTVolume: data.UTVolume, currLTVolume: data.LTVolume })
             })
             updateWaterPassed();
-            let passedVolume= waterVolume.prevUTVolume- waterVolume.currUTVolume;
+            let passedVolume = waterVolume.prevUTVolume - waterVolume.currUTVolume;
             if (currentRoom) {
                 getHomeData().then((rdata) => {
                     rdata.find((item) => {
@@ -262,8 +266,8 @@ const ScheduleWater = () => {
             }
             intervalId = setInterval(() => {
                 if (supplyInfo.remainRoom > 0) {
-                    
-                    let waterPass= supplyList[supplyList.length - supplyInfo.remainRoom];
+
+                    let waterPass = supplyList[supplyList.length - supplyInfo.remainRoom];
                     setSupplyInfo({ type: "decRemainTime" });
                     setTimeout(() => {
                         updateWaterPassed();
@@ -280,15 +284,15 @@ const ScheduleWater = () => {
                     }, 500);
 
                     //if the flowsensor shows less than 50% water has passed but tank water is reduced more than given amount
-                    if(passedVolume >= supplyInfo.remainQuantity && waterPass.waterPassed<scheduleTime.stopAfter*0.5){
-                        getSensorData().then((data)=>{
-                            setWaterVolume({currUTVolume:data.UTVolume,currLTVolume:data.LTVolume, prevUTVolume:data.UTVolume-waterPass.waterPassed, prevLTVolume:data.LTVolume })
+                    if (passedVolume >= supplyInfo.remainQuantity && waterPass.waterPassed < scheduleTime.stopAfter * 0.5) {
+                        getSensorData().then((data) => {
+                            setWaterVolume({ currUTVolume: data.UTVolume, currLTVolume: data.LTVolume, prevUTVolume: data.UTVolume - waterPass.waterPassed, prevLTVolume: data.LTVolume })
                         })
                         console.log("Stopped");
                     }
                     //if the flowsensor is showing 90% water has passed or the tank is showing given amount is reduced
-                    else if (passedVolume >= supplyInfo.remainQuantity || waterPass.waterPassed+2*homeData.flowSpeed>=scheduleTime.stopAfter*0.9) {
-                        console.log(`Water Passed for room:${currentRoom.room}(fs): ${waterPass.waterPassed}+${2*homeData.flowSpeed}`);
+                    else if (passedVolume >= supplyInfo.remainQuantity || waterPass.waterPassed + 2 * homeData.flowSpeed >= scheduleTime.stopAfter * 0.9) {
+                        console.log(`Water Passed for room:${currentRoom.room}(fs): ${waterPass.waterPassed}+${2 * homeData.flowSpeed}`);
                         console.log(`Water Passed for room:${currentRoom.room}(tank based): ${passedVolume}`);
                         setSupplyInfo({ type: "decRemainRoom" });
                         updateHomeData({ roomNo: currentRoom.room, supplyOn: false });
@@ -300,8 +304,8 @@ const ScheduleWater = () => {
                         console.log(supplyList);
 
                         if (supplyInfo.remainRoom > 0) {
-                            getSensorData().then((data)=>{
-                                setWaterVolume({currUTVolume:data.UTVolume,currLTVolume:data.LTVolume, prevUTVolume:data.UTVolume, prevLTVolume:data.LTVolume });
+                            getSensorData().then((data) => {
+                                setWaterVolume({ currUTVolume: data.UTVolume, currLTVolume: data.LTVolume, prevUTVolume: data.UTVolume, prevLTVolume: data.LTVolume });
                                 setSupplyInfo({ type: "decRemainTime" });
                             });
                             setSupplyInfo({ type: "setRemainQuantity", value: scheduleTime.stopAfter });
@@ -329,7 +333,7 @@ const ScheduleWater = () => {
         setSupplyInfo({ type: "resetRemainQuantity" });
         setSupplyInfo({ type: "resetRemainTime" });
         setSupplyInfo({ type: "setTimerOn", value: false });
-        if (supplyInfo.remainTime > 0 && supplyInfo.startAfter < 1){
+        if (supplyInfo.remainTime > 0 && supplyInfo.startAfter < 1) {
             timerMsg = `Motor Stopped`;
             showSimpleAlert("Motor Stopped");
         } else {
@@ -350,8 +354,8 @@ const ScheduleWater = () => {
             loadSupplyList().then((slist) => {
                 console.log(slist);
             });
-            getSensorData().then((data)=>{
-                setWaterVolume({currUTVolume:data.UTVolume,currLTVolume:data.LTVolume, prevUTVolume:data.UTVolume, prevLTVolume:data.LTVolume })
+            getSensorData().then((data) => {
+                setWaterVolume({ currUTVolume: data.UTVolume, currLTVolume: data.LTVolume, prevUTVolume: data.UTVolume, prevLTVolume: data.LTVolume })
             })
             // getHomeData();
         } else {
@@ -365,27 +369,62 @@ const ScheduleWater = () => {
     }, [])
 
     // list item to be displayed
-    const sList = (room, name, waterPassed, supplyStatus) => {
+    // list item to be displayed
+    const CurrRoom = (room, name, wing, waterPassed, supplyStatus) => {
+        let color,status;
+        switch (supplyStatus) {
+            case 0:
+                color = 'warning'
+                status = 'upcoming'
+                break;
+            case 1:
+                color = 'success';
+                status = 'ongoing'
+                break;
+            case 2:
+                color = 'primary'
+                status = 'completed'
+                break;
+
+            default:
+                status = 'other'
+                color = 'info'
+                break;
+        }
         return (
-            <div key={room} className="row g-3">
-                <li className="list-group-item d-flex">
-                    <div className="col-2 col-sm-1">
-                        <span>{supplyStatus}</span>
-                    </div>
-                    <div className="col-1" >
-                        <span className="roomno"  >{room}</span>
-                    </div>
-                    <div className="col-8 col-sm-5">
-                        {" " + name}
-                    </div>
-                    <div className="col-4 d-flex">
-                        {room === homeData.roomNo && homeData.flowSpeed + " mL/s " + homeData.waterPassed + " mL"}
-                        {supplyStatus === 2 && waterPassed + " mL passed"}
-                    </div>
-                </li>
-            </div>
+            <tr key={room}>
+                <td className="text-start">{name}</td>
+                <td className="text-center">{wing}/{room}</td>
+                <td className="text-center">
+                    <div className={`badge badge-${color}`}>{status}</div>
+                </td>
+                <td className="text-center ">{supplyStatus === 1?homeData.flowSpeed:0} ml/s</td>
+                <td className="text-center ">{supplyStatus === 1?homeData.waterPassed:waterPassed} ml</td>
+            </tr>
         );
     }
+
+
+    // list item to be displayed
+    // const sList = (room, name, waterPassed, supplyStatus) => {
+    //     return (
+    //         <li key={room} className="list-group-item d-flex">
+    //             <div className="col-2 col-sm-1">
+    //                 <span>{supplyStatus}</span>
+    //             </div>
+    //             <div className="col-1" >
+    //                 <span className="roomno"  >{room}</span>
+    //             </div>
+    //             <div className="col-8 col-sm-5">
+    //                 {" " + name}
+    //             </div>
+    //             <div className="col-4 d-flex">
+    //                 {room === homeData.roomNo && homeData.flowSpeed + " mL/s " + homeData.waterPassed + " mL"}
+    //                 {supplyStatus === 2 && waterPassed + " mL passed"}
+    //             </div>
+    //         </li>
+    //     );
+    // }
 
     return (
         <>
@@ -400,17 +439,17 @@ const ScheduleWater = () => {
                         <input className="mx-3 form-control mb-2" type="datetime-local" onChange={e => setScheduleTime({ ...scheduleTime, startTime: e.target.value })}
                             value={scheduleTime.startTime} id="motorStartTime" name="motorStartTime" />
 
-                    <div className="mb-1" onChange={e=>{setsupplyBy(e.target.value)}} value={supplyBy}>
-                        <input className="" type="radio" name="supplyBy"
-                            id="supplyBy1" value="time" defaultChecked/>
-                        <label className="ps-1" htmlFor="supplyBy1">Time</label>
-                        <input className="ms-3" type="radio" name="supplyBy"
-                            id="supplyBy2" value="quantity" />
-                        <label className="ps-1" htmlFor="supplyBy2">Quantity</label>
-                    </div>
+                        <div className="mb-1" onChange={e => { setsupplyBy(e.target.value) }} value={supplyBy}>
+                            <input className="" type="radio" name="supplyBy"
+                                id="supplyBy1" value="time" defaultChecked />
+                            <label className="ps-1" htmlFor="supplyBy1">Time</label>
+                            <input className="ms-3" type="radio" name="supplyBy"
+                                id="supplyBy2" value="quantity" />
+                            <label className="ps-1" htmlFor="supplyBy2">Quantity</label>
+                        </div>
 
-                        <div className='mb-2'>Stop motor after {supplyBy==='time'?"in (minutes) :":"(quantity)"}</div>
-                        <input className="mx-3 form-control mb-2" type="number" id="motorStopTime" placeholder={supplyBy==='time'?"Time in minutes":"Quantity in mL"}
+                        <div className='mb-2'>Stop motor after {supplyBy === 'time' ? "in (minutes) :" : "(quantity)"}</div>
+                        <input className="mx-3 form-control mb-2" type="number" id="motorStopTime" placeholder={supplyBy === 'time' ? "Time in minutes" : "Quantity in mL"}
                             onChange={e => setScheduleTime({ ...scheduleTime, stopAfter: e.target.value })} value={scheduleTime.stopAfter} name="motorStopTime" min='1' max='100' />
 
                         <p className='ms-4 mt-2 mb-3 text-danger' >{timerMsg}</p>
@@ -423,24 +462,38 @@ const ScheduleWater = () => {
                     </div>
 
                     {timerMsg !== "" &&
-                        <div>
-                            <div className='list-group'>
-                                <span className='fw-bold m-1'>Remaining</span>
-                                {supplyList.filter((item) => item.supplyStatus === 0).map((item) => {
-                                    return sList(item.room, item.name, item.waterPassed, item.supplyStatus)
-                                })}
+                        <div className="main-card mb-3 card mt-2">
+                            <div className="card-header">Current supply List
+                                <div className="btn-actions-pane-right">
+                                </div>
                             </div>
-                            <div className='list-group'>
-                                <span className='fw-bold m-1'>Currently going</span>
-                                {supplyList.filter((item) => item.supplyStatus === 1).map((item) => {
-                                    return sList(item.room, item.name, item.waterPassed, item.supplyStatus)
-                                })}
-                            </div>
-                            <div className='list-group'>
-                                <span className='fw-bold m-1'> Done</span>
-                                {supplyList.filter((item) => item.supplyStatus === 2).map((item) => {
-                                    return sList(item.room, item.name, item.waterPassed, item.supplyStatus)
-                                })}
+                            <div className="table-responsive">
+                                <table className="align-middle mb-0 table table-borderless table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th className="text-start">Name</th>
+                                            <th className="text-center">Flat</th>
+                                            <th className="text-center">Status</th>
+                                            <th className="text-center">Flow speed</th>
+                                            <th className="text-center">Water pass</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        {supplyList.filter((item) => item.supplyStatus === 0).map((item) => {
+                                            return CurrRoom(item.room, item.name, item.wing, item.waterPassed, item.supplyStatus)
+                                        })}
+
+                                        {supplyList.filter((item) => item.supplyStatus === 1).map((item) => {
+                                            return CurrRoom(item.room, item.name, item.wing, item.waterPassed, item.supplyStatus)
+                                        })}
+
+                                        {supplyList.filter((item) => item.supplyStatus === 2).map((item) => {
+                                            return CurrRoom(item.room, item.name, item.wing, item.waterPassed, item.supplyStatus)
+                                        })}
+
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     }

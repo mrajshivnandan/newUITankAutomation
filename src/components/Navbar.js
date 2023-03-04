@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import logoImg from '../images/logo4.png'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import appdata from '../utility/appdata'
 import Cookies from 'js-cookie'

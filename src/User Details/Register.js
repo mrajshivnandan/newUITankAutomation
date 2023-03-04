@@ -1,10 +1,9 @@
 import { useFormik } from 'formik'
 import React, {useState, useEffect} from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, } from 'react-router-dom'
 import * as Yup from 'yup'
 import { getSupplyList, saveSupplyList } from '../utility/espFucntion';
 import { showSimpleAlert } from '../components/AlertMsg';
-import {addata} from './context/ContextProvider'
 
 const Register = () => {
 
@@ -38,7 +37,8 @@ const Register = () => {
     })
 
     const {values,errors, touched, handleChange, handleBlur, handleSubmit} = useFormik({
-    initialValues: { wing: "A", room: "101", name: "test", email: "test@mail.com", age: "20", mobile: "8456893296", ownership: "", status: "" },
+        // initialValues: { wing: "A", room: "101", name: "test", email: "test@mail.com", age: "20", mobile: "8456893296", ownership: "", status: "" },
+        initialValues: { wing: "", room: "", name: "", email: "", age: "", mobile: "", ownership: "", status: "" },
     validationSchema: roomSchema,
     validate: checkRoom,
     onSubmit: (values, action) => {
@@ -50,7 +50,8 @@ const Register = () => {
 
     useEffect(() => {
         loadSupplyList();
-        console.log("List is loading");
+        // console.log("List is loading");
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
     
       // reducer for adding,removing and updating supply listItem
@@ -61,21 +62,11 @@ const Register = () => {
       setSupplyList(roomlist);
 
       const saved = await saveSupplyList(supplyList);
-      if(saved) showSimpleAlert("List Updated Successfully")
+      if(saved) showSimpleAlert("User Added Successfully")
     }
-    // } else if (type === "removeListItem") {
-    //   roomlist = roomlist.filter((e) => { return e.room !== value.room && e.name !== value.name });
-    //   setSupplyList(roomlist)
-    // } else if (type === "updateListItem") {
-
-    //   const index = roomlist.findIndex((obj => obj.room === value.room));
-    //   if (index !== -1) {
-    //     roomlist[index] = { ...roomlist[index], supplyOn: value.supplyOn };
-    //     // console.log(roomlist[index]);
-    //   }
-    //   setSupplyList(roomlist)
-    // }
   }
+  
+  // eslint-disable-next-line no-unused-vars
   const saveChanges= async()=>{
     // console.log((supplyList[0]));
     const saved = await saveSupplyList(supplyList);
@@ -96,55 +87,55 @@ const Register = () => {
     <NavLink to="/users">Go Back</NavLink>
     <form className="mt-4" onSubmit={handleSubmit}>
         <div className="row">
-            <div class="mb-3 col-lg-6 col-md-6 col-12">
-                <label for="exampleInputPassword1" class="form-label">Wing</label>
-                <input type="text" name="wing" value={values.wing} onBlur={handleBlur} onChange={handleChange} class="form-control" />
+            <div className="mb-3 col-lg-6 col-md-6 col-12">
+                <label htmlFor="exampleInputPassword1" className="form-label">Wing</label>
+                <input type="text" name="wing" value={values.wing} onBlur={handleBlur} onChange={handleChange} className="form-control" />
                 <p className='ms-4 mt-1 mb-4 text-danger' >{errors.wing && touched.wing ? errors.wing : ""}</p>
             </div>
-            <div class="mb-3 col-lg-6 col-md-6 col-12">
-                <label for="exampleInputPassword1" class="form-label">Room no</label>
-                <input type="number" name="room" value={values.room} onBlur={handleBlur} onChange={handleChange} class="form-control" />
+            <div className="mb-3 col-lg-6 col-md-6 col-12">
+                <label htmlFor="exampleInputPassword1" className="form-label">Room no</label>
+                <input type="number" name="room" value={values.room} onBlur={handleBlur} onChange={handleChange} className="form-control" />
                 <p className='ms-4 mt-1 mb-4 text-danger' >{errors.room && touched.room ? errors.room : ""}</p>
             </div>
-            <div class="mb-3 col-lg-6 col-md-6 col-12">
-                <label for="exampleInputEmail1" class="form-label">Name</label>
-                <input type="text" name="name" value={values.name} onBlur={handleBlur} onChange={handleChange} class="form-control" />
+            <div className="mb-3 col-lg-6 col-md-6 col-12">
+                <label htmlFor="exampleInputEmail1" className="form-label">Name</label>
+                <input type="text" name="name" value={values.name} onBlur={handleBlur} onChange={handleChange} className="form-control" />
             <p className='ms-4 mt-1 mb-4 text-danger' >{errors.name && touched.name ? errors.name : ""}</p>
             </div>
-            <div class="mb-3 col-lg-6 col-md-6 col-12">
-                <label for="exampleInputPassword1" class="form-label">Email</label>
-                <input type="email" name="email" value={values.email} onBlur={handleBlur} onChange={handleChange} class="form-control" />
+            <div className="mb-3 col-lg-6 col-md-6 col-12">
+                <label htmlFor="exampleInputPassword1" className="form-label">Email</label>
+                <input type="email" name="email" value={values.email} onBlur={handleBlur} onChange={handleChange} className="form-control" />
                 <p className='ms-4 mt-1 mb-4 text-danger' >{errors.email && touched.email ? errors.email : ""}</p>
             </div>
-            <div class="mb-3 col-lg-6 col-md-6 col-12">
-                <label for="exampleInputPassword1" class="form-label">Age</label>
-                <input type="number" name="age" value={values.age} onBlur={handleBlur} onChange={handleChange} class="form-control" />
+            <div className="mb-3 col-lg-6 col-md-6 col-12">
+                <label htmlFor="exampleInputPassword1" className="form-label">Age</label>
+                <input type="number" name="age" value={values.age} onBlur={handleBlur} onChange={handleChange} className="form-control" />
                 <p className='ms-4 mt-1 mb-4 text-danger' >{errors.age && touched.age ? errors.age : ""}</p>
             </div>
-            <div class="mb-3 col-lg-6 col-md-6 col-12">
-                <label for="exampleInputPassword1" class="form-label">Mobile</label>
-                <input type="number" name="mobile" value={values.mobile} onBlur={handleBlur} onChange={handleChange} class="form-control" />
+            <div className="mb-3 col-lg-6 col-md-6 col-12">
+                <label htmlFor="exampleInputPassword1" className="form-label">Mobile</label>
+                <input type="number" name="mobile" value={values.mobile} onBlur={handleBlur} onChange={handleChange} className="form-control" />
                 <p className='ms-4 mt-1 mb-4 text-danger' >{errors.mobile && touched.mobile ? errors.mobile : ""}</p>
             </div>
-            <div class="mb-3 col-lg-6 col-md-6 col-12">
-                <label for="exampleInputPassword1" class="form-label">Ownership</label>
-                <select class="form-select" aria-label="Default select example" name='ownership' value={values.ownership} onBlur={handleBlur} onChange={handleChange}>
-                    <option value="" disabled selected hidden>Please Select...</option>
+            <div className="mb-3 col-lg-6 col-md-6 col-12">
+                <label htmlFor="exampleInputPassword1" className="form-label">Ownership</label>
+                <select className="form-select" aria-label="Default select example" name='ownership' value={values.ownership} onBlur={handleBlur} onChange={handleChange}>
+                    <option value="" disabled hidden>Please Select...</option>
                     <option value="1">Owner</option>
                     <option value="2">Tenant</option>
                 </select>
                 <p className='ms-4 mt-1 mb-4 text-danger' >{errors.ownership && touched.ownership ? errors.ownership : ""}</p>
             </div>
-            <div class="mb-3 col-lg-6 col-md-6 col-12">
-                <label for="exampleInputPassword1" class="form-label">Status</label>
-                <select class="form-select" aria-label="Default select example" name="status" value={values.status} onBlur={handleBlur} onChange={handleChange} >
-                    <option value="" disabled selected hidden>Please Choose...</option>
+            <div className="mb-3 col-lg-6 col-md-6 col-12">
+                <label htmlFor="exampleInputPassword1" className="form-label">Status</label>
+                <select className="form-select" aria-label="Default select example" name="status" value={values.status} onBlur={handleBlur} onChange={handleChange} >
+                    <option value="" disabled hidden>Please Choose...</option>
                     <option value="active">Active</option>
                     <option value="inactive">Inactive</option>
                 </select>
                 <p className='ms-4 mt-1 mb-4 text-danger' >{errors.status && touched.status ? errors.status : ""}</p>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" className="btn btn-primary">Submit</button>
         </div>
     </form>
 </div>

@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-// import Sortable from 'sortablejs';
 import { ReactSortable } from "react-sortablejs";
 import { getSupplyList, saveSupplyList } from '../utility/espFucntion';
 import { showSimpleAlert } from '../components/AlertMsg';
-import { CurrRow } from '../accessory/CurrTable';
 
 // add or remove list items
 const SupplyList = () => {
-  const [supplyList, setSupplyList] = useState([
-    { room: 1, name: 'Room1', status: "inactive" },
-    { room: 2, name: 'Room2', status: "inactive" },
-  ]);
+  const [supplyList, setSupplyList] = useState([]);
   const [seed, setSeed] = useState(1);
   const reset = () => {
        setSeed(Math.random());
@@ -25,7 +18,7 @@ const SupplyList = () => {
       roomlist.push({ value});
       setSupplyList(roomlist);
     } else if (type === "removeListItem") {
-      roomlist = roomlist.filter((e) => { return e.room !== value.room && e.name !== value.name });
+      roomlist = roomlist.filter((e) => { return e.room !== value.room || e.wing !== value.wing });
       setSupplyList(roomlist)
     } else if (type === "updateListItem") {
 
@@ -39,33 +32,22 @@ const SupplyList = () => {
   }
 
   // validation for adding new room
-  const roomError = 'range [0-10000]';
-  const roomSchema = () => Yup.object({
-    name: Yup.string().required("please enter room name")
-      .test('Valid Character?', 'Name is Invalid', (str) => !(/[^a-zA-Z0-9_\s]+/.test(str))),
-    room: Yup.number().required("enter room no.").min(0, roomError).max(10000, roomError)
-  })
+  // const roomError = 'range [0-10000]';
+  // const roomSchema = () => Yup.object({
+  //   name: Yup.string().required("please enter room name")
+  //     .test('Valid Character?', 'Name is Invalid', (str) => !(/[^a-zA-Z0-9_\s]+/.test(str))),
+  //   room: Yup.number().required("enter room no.").min(0, roomError).max(10000, roomError)
+  // })
 
-  // checks if room already exists
-  const checkRoom = async (values) => {
-    let errors = {};
-    if (supplyList.filter(function (e) { return e.room === values.room; }).length > 0) {
-      errors.room = "room exists"
-    }
-    return errors;
-  }
+  // // checks if room already exists
+  // const checkRoom = async (values) => {
+  //   let errors = {};
+  //   if (supplyList.filter(function (e) { return e.room === values.room; }).length > 0) {
+  //     errors.room = "room exists"
+  //   }
+  //   return errors;
+  // }
   
-  // handling form with formik
-  const { values, errors, touched, handleChange, handleSubmit, handleBlur } = useFormik({
-    initialValues: { name: "", room: "" },
-    validationSchema: roomSchema,
-    validate: checkRoom,
-    onSubmit: (values, action) => {
-      manageList("addListItem", values);
-      action.resetForm();
-    }
-  })
-
   //update status value on clicking checkbox
   const toggleSupply = (room, name, isChecked,evt) => {
     // console.log(room, name, isChecked);
@@ -76,23 +58,23 @@ const SupplyList = () => {
   }
 
   // list item to be displayed
-  const sList = (room, name,supplyOn,toggleSupply) => {
+  const sList = (room, name, wing, status, toggleSupply) => {
     return (
-        <div key={room} className= 'list-group-item d-flex'>
+        <div key={wing+room} className= 'list-group-item d-flex'>
             <div className="col-2">
               <input className="form-check-input" type="checkbox" value="" id={"rm-" + room}
-                checked={supplyOn} onChange={(e) => { toggleSupply(room, name, e.target.checked,e); }} />
+                checked={status==='active'} onChange={(e) => { toggleSupply(room, name, e.target.checked,e); }} />
             </div>
             <div className='col-2'>
               <label className="form-check-label roomno" htmlFor={"rm-" + room} >{room}</label>
             </div>
             <div className="col-4"> {"" + name}</div>
             <div className="col-2">
-              <span className='m-auto hover-pointer'><i class="fas fa-edit"></i></span>
+              <span className='m-auto hover-pointer'>{wing}</span>
             </div>
             <div className="col-2">
               <span className='m-auto hover-pointer' onClick={() => manageList(
-                "removeListItem", { room, name })} style={{ cursor: 'pointer' }}><i class="fas fa-trash-alt"></i></span>
+                "removeListItem", { room, wing })} style={{ cursor: 'pointer' }}><i className="fas fa-trash-alt"></i></span>
             </div>
         </div>
     )
@@ -147,11 +129,11 @@ const SupplyList = () => {
   }
 
   //load list when page is loaded
-  useEffect(() => {
-    supplyList.forEach((e)=>{
-      console.log(e);
-    })
-  }, [supplyList]);
+  // useEffect(() => {
+  //   supplyList.forEach((e)=>{
+  //     console.log(e);
+  //   })
+  // }, [supplyList]);
 
   useEffect(() => {
     // showSimpleAlert("Hello there")
@@ -164,7 +146,7 @@ const SupplyList = () => {
     <div className='m-3'>
   
   <h2 className='text-center mb-3'>Supply List</h2>
-      <form onSubmit={handleSubmit}>
+      {/* <form onSubmit={handleSubmit}>
         <div className="row g-3 mb-4">
           <div className="col-sm-7">
             <input type="text" className="form-control" onBlur={handleBlur} onChange={handleChange} value={values.name}
@@ -180,7 +162,7 @@ const SupplyList = () => {
             <button className='btn btn-primary' type='submit' >Add</button>
           </div>
         </div>
-      </form>
+      </form> */}
 
       <div className='mb-3'>
         
@@ -191,28 +173,29 @@ const SupplyList = () => {
       </div>
 
 
-<div class="container-fluid px-0 px-lg-4">
+<div className="container-fluid px-0 px-lg-4">
 <div className="card" style={{overflow:'scroll'}}>
-  <div class="list-group" style={{minWidth:'600px'}}>
-          <div class="list-group-item d-flex" >
-              <div class="col-2">Active</div>
-              <div class="col-2">RoomNo</div>
-              <div class="col-4">Name</div>
-              <div class="col-2">Edit</div>
-              <div class="col-2">Delete</div>
+  <div className="list-group" style={{minWidth:'600px'}}>
+          <div className="list-group-item d-flex" >
+              <div className="col-2">Active</div>
+              <div className="col-2">RoomNo</div>
+              <div className="col-4">Name</div>
+              <div className="col-2">Wing</div>
+              <div className="col-2">Delete</div>
           </div>
       </div>
-    <ReactSortable className='list-group' key={seed} list={supplyList} setList={setSupplyList} ghostClass='bg-info' style={{display:'block',minWidth:'600px'}}>
+    <ReactSortable className='list-group' key={seed} list={supplyList} setList={setSupplyList} ghostclassName='bg-info' style={{display:'block',minWidth:'600px'}}>
       {supplyList.map((item) => (
-        sList(item.room, item.name,item.status,toggleSupply)
+        sList(item.room,item.name,item.wing,item.status,toggleSupply)
       ))}
     </ReactSortable>
 </div>
 </div>
 
-      
-      <button className='btn btn-secondary me-2' type='button' onClick={loadSupplyList} >Cancel</button>
-      <button className='btn btn-primary' type='button' onClick={saveChanges} >Save</button>
+      <div className='mt-2'>
+        <button className='btn btn-secondary me-2' type='button' onClick={loadSupplyList} >Cancel</button>
+        <button className='btn btn-primary' type='button' onClick={saveChanges} >Save</button>
+      </div>
 
     </div>
   )

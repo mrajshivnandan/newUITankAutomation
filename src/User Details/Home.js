@@ -31,7 +31,7 @@ const Home = (props) => {
   
   const CurrRow = (props) => {
     return (
-        <tr key={props.ID}>
+        <tr key={props.Wing+props.Room}>
             <td className="text-center text-muted">{props.ID}</td>
             <td>
                 <div className="widget-heading">{props.Name}</div>
@@ -41,9 +41,9 @@ const Home = (props) => {
                 <div className={`badge badge-${props.Color}`}>{props.Status}</div>
             </td>
             <td className="text-center">
-              <NavLink to={`/users/view`}><button className="btn btn-primary ms-2 mt-1"><i class="fas fa-eye"></i></button></NavLink>
-              <NavLink to={`/users/edit`}><button className="btn btn-success ms-1 mt-1"><i class="fas fa-user-edit"></i></button></NavLink>
-              <button className="btn btn-danger ms-2 mt-1" onClick={()=>deleteUser(props.Room,props.Wing)}><i class="fas fa-trash"></i></button>
+              <NavLink to={`/users/view`}><button className="btn btn-primary ms-2 mt-1"><i className="fas fa-eye"></i></button></NavLink>
+              <NavLink to={`/users/edit`}><button className="btn btn-success ms-1 mt-1"><i className="fas fa-user-edit"></i></button></NavLink>
+              <button className="btn btn-danger ms-2 mt-1" onClick={()=>deleteUser(props.Room,props.Wing)}><i className="fas fa-trash"></i></button>
             </td>
         </tr>
     )
@@ -85,8 +85,8 @@ const Home = (props) => {
                         <tbody>
                             {getuserdata.map((item, id) => {
                               return (
-                                <>  
                                 <CurrRow 
+                                key = {id+1}
                                 ID= {id+1} 
                                 Name= {item.name} 
                                 Room= {item.room}
@@ -94,8 +94,6 @@ const Home = (props) => {
                                 Status={(item.status)} 
                                 Color= {item.status === "active" ? "success": "info"}
                                 />
-
-                                </>
                               )
                             })}
                         </tbody>
