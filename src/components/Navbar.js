@@ -4,7 +4,7 @@ import appdata from '../utility/appdata'
 import Cookies from 'js-cookie'
 import { loadAlerts, setModalBtnClick, showModalAlert, showSimpleAlert } from './AlertMsg';
 import { loadSpinner, startSpinner, stopSpinner } from './Spinner';
-import { logoutUser } from '../utility/user'
+import { logoutAdmin } from '../utility/admin'
 
 const initTab = { login: 'Login', register: 'Register' };
 const Navbar = () => {
@@ -45,6 +45,17 @@ const Navbar = () => {
         loadSpinner();
         loadAlerts();
         loadNavbar();
+
+        var prevScrollpos = window.pageYOffset;
+        window.onscroll = function () {
+            var currentScrollPos = window.pageYOffset;
+            if (prevScrollpos > currentScrollPos) {
+                document.getElementById("navbar").style.top = "0";
+            } else {
+                document.getElementById("navbar").style.top = "-80px";
+            }
+            prevScrollpos = currentScrollPos;
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -59,7 +70,7 @@ const Navbar = () => {
         // console.log('Signing out user');
         setModalBtnClick(() => {
             startSpinner();
-            logoutUser(appdata).then(() => {
+            logoutAdmin(appdata).then(() => {
                 navigate('/login');
             }).finally(() => {
                 stopSpinner();
@@ -81,13 +92,13 @@ const Navbar = () => {
             setLogRegTab({ login: 'Login', register: 'Register' })
         }
 
-        if(name==='/getdata'){
+        if (name === '/getdata') {
             setmonitorControlTab('Get Data');
-        }else if(name==='/schedule'){
+        } else if (name === '/schedule') {
             setmonitorControlTab('Schedule');
-        }else if(name==='/configure'){
+        } else if (name === '/configure') {
             setmonitorControlTab('Configure');
-        }else if(name==='/supplyList'){
+        } else if (name === '/supplyList') {
             setmonitorControlTab('SupplyList');
         }
     }
@@ -147,15 +158,15 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className="navbar navbar-expand-lg bg-light">
+            <nav id='navbar' className="navbar fixed-top navbar-expand-lg bg-light" style={{ transition: 'top 0.3s' }}>
                 <div className="container-fluid">
                     <NavLink className="navbar-brand" name='logo' to="/">
                         {/* <img src={logoImg} alt="Logo" width="30" height="30" className="d-inline-block align-text-top" /> */}
-                        <img src={require("../images/logo4.png")} alt=" " width="60" height="50"/>
+                        <img src={require("../images/logo4.png")} alt=" " width="60" height="50" />
                         Tank Automation
                     </NavLink>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
+                        <i className="fas fa-bars"></i>
                     </button>
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav ms-auto">

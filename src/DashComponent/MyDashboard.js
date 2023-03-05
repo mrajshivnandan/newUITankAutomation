@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 // import '../App.css'
 // import Footer from "./components/Footer";
 import Register from "../User Details/Register";
@@ -16,7 +16,9 @@ import Configure from './Configure';
 import SupplyList from './SupplyList';
 import Dashboard from "./Dashboard";
 
-import { Routes, Route} from "react-router-dom";
+import { Routes, Route, useNavigate} from "react-router-dom";
+import { userInfo } from '../utility/appdata';
+import { loadAdminData } from '../utility/admin';
 
 let initValue = {
   index: 0,
@@ -29,10 +31,33 @@ let initValue = {
   tankFull: false
 }
 export const EspContext = createContext("");
+export const AdminContext = createContext("");
 function MyDashboard() {
+  const navigate = useNavigate();
   const [espData, setEspData] = useState(initValue);
+  const [adminData, setAdminData] = useState(userInfo);
+
+  useEffect(() => {
+    // if user is logged in then only allow else send user to login page
+    if (!sessionStorage.getItem('loggedin')) {
+        navigate('/login');
+    }
+    //getting asmin info after the page is loaded
+    if (!userInfo.creationdate) {
+      loadAdminData()
+          .then((data) => {
+              if(data)
+              setAdminData(data);
+          })
+    } else {
+        setAdminData(userInfo);
+    }
+    // console.log('about: ',about,'otherinfo ',otherinfo);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [])
+
   return (
-    
+    <AdminContext.Provider value= {{adminData,setAdminData}}>
     <EspContext.Provider value={{espData,setEspData}}>
     <div className="mysidebar">
     <div className=" bg-gradient-primary">
@@ -56,6 +81,7 @@ function MyDashboard() {
       </main>
     </div>
 </EspContext.Provider>
+</AdminContext.Provider>
   );
 }
 

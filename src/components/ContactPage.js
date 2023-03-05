@@ -85,31 +85,31 @@ const ContactPage = () => {
                 <h2>Get in touch</h2>
                 <form onSubmit={handleSubmit} className="row g-3 contactForm mt-4">
                     <div className="col-md-6">
-                      <label for="inputEmail4" className="form-label">First Name</label>
+                      <label htmlFor="inputEmail4" className="form-label">First Name</label>
                       <input type="text" name="firstName" className="form-control" onChange={handleChange} value={values.firstName} required />
                     </div>
                     <div className="col-md-6">
-                      <label for="inputPassword4" className="form-label">Last Name</label>
+                      <label htmlFor="inputPassword4" className="form-label">Last Name</label>
                       <input type="text" name="lastName" className="form-control" onChange={handleChange} value={values.lastName}  required />
                     </div>
                     <div className="col-12">
-                      <label for="inputAddress" className="form-label">Subject</label>
+                      <label htmlFor="inputAddress" className="form-label">Subject</label>
                       <input type="text" name="subject" className="form-control" onChange={handleChange} value={values.subject}  required />
                     </div>
                     <div className="col-12">
-                        <label for="inputAddress" className="form-label">Email Id</label>
+                        <label htmlFor="inputAddress" className="form-label">Email Id</label>
                         <input type="email" name="email" className="form-control"onChange={handleChange} value={values.email}  required />
                       </div>
                     <div className="col-md-6">
-                      <label for="inputCity" className="form-label">City</label>
+                      <label htmlFor="inputCity" className="form-label">City</label>
                       <input type="text" name="city" className="form-control" onChange={handleChange} value={values.city}  />
                     </div>
                     <div className="col-md-6">
-                        <label for="inputCity" className="form-label">Contact Number</label>
+                        <label htmlFor="inputCity" className="form-label">Contact Number</label>
                         <input type="number" name="mobile" className="form-control" onChange={handleChange} value={values.mobile} required />
                     </div>
                     <div className="col-12 mb-3">
-                        <label for="exampleFormControlTextarea1" className="form-label">Message</label>
+                        <label htmlFor="exampleFormControlTextarea1" className="form-label">Message</label>
                         <textarea className="form-control" name="message" onChange={handleChange} value={values.message} rows="3"></textarea>
                     </div>
                     <div className="col-12 text-center">

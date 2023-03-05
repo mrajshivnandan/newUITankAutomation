@@ -3,10 +3,12 @@ import { setModalBtnClick, showModalAlert, showSimpleAlert,loadAlerts } from '..
 import profileImg from'../images/undraw_profile.svg'
 import {useNavigate, Link } from 'react-router-dom'
 import appdata from '../utility/appdata';
-import { logoutUser } from '../utility/user'
-import { useEffect } from 'react';
+import { logoutAdmin } from '../utility/admin'
+import { useContext, useEffect } from 'react';
+import { AdminContext } from './MyDashboard';
 
 const Topbar = () => {
+    const {adminData} = useContext(AdminContext)
     const navigate = useNavigate({});
 
 const changeStyle = () => {
@@ -17,7 +19,7 @@ const changeStyle = () => {
 const signoutUser = () => {
     // console.log('Signing out user');
     setModalBtnClick(() => {
-        logoutUser(appdata).then(() => {
+        logoutAdmin(appdata).then(() => {
             navigate('/');
             window.location.reload();
         }).finally(() => {
@@ -105,7 +107,7 @@ useEffect(() => {
           <li className="nav-item dropdown no-arrow">
               <a className="nav-link dropdown-toggle" href=" " id="userDropdown" role="button"
                   data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span className="mr-2 d-lg-inline text-gray-600 small">Douglas McGee</span>
+                  <span className="mr-2 d-lg-inline text-gray-600 small">{adminData.name}</span>
                   <img className="img-profile rounded-circle" alt='proficPic'
                       src={profileImg} />
               </a>

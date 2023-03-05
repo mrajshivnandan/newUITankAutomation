@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { userInfo } from '../utility/appdata';
-import { loadUserData } from '../utility/user';
+import { loadAdminData } from '../utility/admin';
+import { AdminContext } from './MyDashboard';
 const imgPath = require('../images/avatar3.png');
 
 let about = document.getElementById('aboutProfile');
@@ -10,7 +11,7 @@ let loadcomp = document.querySelectorAll('.glowme');
 
 const Profile = () => {
     const navigate = useNavigate();
-    const [userData, setUserData] = useState(userInfo);
+    const {adminData, setAdminData} = useContext(AdminContext)
     const [selectedPart, setSelectedPart] = useState('about');
 
     // getting data from backend to fill profile page data
@@ -18,10 +19,10 @@ const Profile = () => {
 
         //applying placeholders while data is being fetched from backend
         loadcomp.forEach((elem) => { elem.classList.add('placeholder'); })
-        loadUserData()
+        loadAdminData()
             .then((data) => {
                 if(data)
-                setUserData(data);
+                setAdminData(data);
             })
             .finally(() => {
                 loadcomp.forEach((elem) => { elem.classList.remove('placeholder') });
@@ -52,7 +53,7 @@ const Profile = () => {
         if (!userInfo.creationdate) {
             loadProfilePage();
         } else {
-            setUserData(userInfo);
+            setAdminData(userInfo);
         }
         // console.log('about: ',about,'otherinfo ',otherinfo);
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -66,27 +67,27 @@ const Profile = () => {
 
                     <div className='row my-2' >
                         <span className="col-xs-11 col-sm-5 text_bold">UserId : </span>
-                        <span className="glowme col-xs-11 col-sm-7">{userData._id}</span>
+                        <span className="glowme col-xs-11 col-sm-7">{adminData._id}</span>
                     </div>
                     <div className='row my-2' >
                         <span className="col-xs-11 col-sm-5 text_bold">Name : </span>
-                        <span className="glowme col-xs-11 col-sm-7">{userData.name}</span>
+                        <span className="glowme col-xs-11 col-sm-7">{adminData.name}</span>
                     </div>
                     <div className='row my-2' >
                         <span className="col-xs-11 col-sm-5 text_bold">Gender : </span>
-                        <span className="glowme col-xs-11 col-sm-7">{userData.gender}</span>
+                        <span className="glowme col-xs-11 col-sm-7">{adminData.gender}</span>
                     </div>
                     <div className='row my-2' >
                         <span className="col-xs-11 col-sm-5 text_bold">Email : </span>
-                        <span className="glowme col-xs-11 col-sm-7">{userData.email}</span>
+                        <span className="glowme col-xs-11 col-sm-7">{adminData.email}</span>
                     </div>
                     <div className='row my-2' >
                         <span className="col-xs-11 col-sm-5 text_bold">Phone : </span>
-                        <span className="glowme col-xs-11 col-sm-7">{userData.phone}</span>
+                        <span className="glowme col-xs-11 col-sm-7">{adminData.phone}</span>
                     </div>
                     <div className='row my-2' >
                         <span className="col-xs-11 col-sm-5 text_bold">Date of creation : </span>
-                        <span className="glowme col-xs-11 col-sm-7">{userData.creationdate}</span>
+                        <span className="glowme col-xs-11 col-sm-7">{adminData.creationdate}</span>
                     </div>
                 </div>
 
@@ -150,7 +151,7 @@ const Profile = () => {
                         <div className="col-sm-10 col-md-8 d-flex flex-column order-2 mt-4" >
                             <div className="col-md-10 col-lg-4 col-xl-3 order-1 d-flex mw-100 justify-content-between">
                                 <div className='placeholder-glow' >
-                                    <div className='glowme text_bold'>{userData.name}</div>
+                                    <div className='glowme text_bold'>{adminData.name}</div>
                                     <div className="w-100"></div>
                                     <div className='glowme text-primary'>Society Admin</div>
                                     <div className="w-100"></div>
@@ -171,7 +172,7 @@ const Profile = () => {
                                             <span className="nav-link" onClick={() => { changeContent('otherinfo') }} id='otherInfo'>Other info</span>
                                         </li>
                                     </ul>
-                                    {selectedPart === 'about' ? <ProfileSection userData={userData} /> : <OtherInfo />}
+                                    {selectedPart === 'about' ? <ProfileSection adminData={adminData} /> : <OtherInfo />}
                                 </div>
                             </div>
                         </div>

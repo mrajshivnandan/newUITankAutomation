@@ -1,8 +1,8 @@
 import appdata, {userInfo } from "./appdata";
 const Cookies = require('js-cookie');
 
-//to get the user data from the backend
-export const getUserData = async() =>{
+//to get the admin data from the backend
+export const getAdminData = async() =>{
     try {
         // console.log(appdata);
         const res= await fetch(appdata.baseUrl+"/getData",{
@@ -26,9 +26,9 @@ export const getUserData = async() =>{
     }
 }
 
-//to get the user data and store it locally for faster processing
-export const loadUserData = async() =>{
-    const data = await getUserData();
+//to get the admin data and store it locally for faster processing
+export const loadAdminData = async() =>{
+    const data = await getAdminData();
     if(data){
         console.log(data);
         Object.entries(data).forEach((e) => {if(userInfo[e[0]]!==undefined){userInfo[e[0]]= e[1]}});
@@ -36,8 +36,8 @@ export const loadUserData = async() =>{
     return data;
 }
 
-//to log out user from the browser
-export const logoutUser= async(appdata)=> {
+//to log out admin from the browser
+export const logoutAdmin= async(appdata)=> {
     try {
         
         const res= await fetch(appdata.baseUrl+"/logout",{

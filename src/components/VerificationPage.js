@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import validator from 'validator';
 import { NavLink, useNavigate } from 'react-router-dom'
 import appdata, { userInfo } from '../utility/appdata';
-import { getUserData } from '../utility/user';
+import { getAdminData } from '../utility/admin';
 import * as Yup from 'yup';
 
 const otpError = "OTP is not valid!";
@@ -80,7 +80,7 @@ const VerifyEmail = () => {
 
     useEffect(() => {
         if (sessionStorage.getItem('loggedin') && !userInfo.creationdate) {
-            getUserData(appdata).then((d) => {
+            getAdminData(appdata).then((d) => {
                 if(d)
                 setEmail(d.email)
             });

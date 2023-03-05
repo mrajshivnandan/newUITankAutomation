@@ -4,7 +4,7 @@ import {useFormik} from 'formik';
 import contactSchema from '../schemas/contactSchema';
 import {loadAlerts,showModalAlert} from '../components/AlertMsg';
 import appdata, {userInfo} from '../utility/appdata';
-import { loadUserData } from '../utility/user';
+import { loadAdminData } from '../utility/admin';
 
 let loadcomp= document.querySelectorAll('.glowme');
 let initValue= {
@@ -59,7 +59,7 @@ const Contactus = () => {
 
         //applying placeholders while data is being fetched from backend
         loadcomp.forEach((elem) => { elem.classList.add('placeholder'); })
-        loadUserData()
+        loadAdminData()
             .then((data) => {
                 if(data){
                     setFieldValue('name',data.name)
