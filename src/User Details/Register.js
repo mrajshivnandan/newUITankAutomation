@@ -1,12 +1,12 @@
 import { useFormik } from 'formik'
 import React, {useState, useEffect} from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import * as Yup from 'yup'
 import { getSupplyList, saveSupplyList } from '../utility/espFucntion';
 import { showSimpleAlert } from '../components/AlertMsg';
-import {addata} from './context/ContextProvider'
 
 const Register = () => {
+
 
     const [supplyList, setSupplyList] = useState([]);
 
@@ -60,6 +60,7 @@ const Register = () => {
       roomlist.push(value);
       setSupplyList(roomlist);
 
+    //   console.log(setUdata);
       const saved = await saveSupplyList(supplyList);
       if(saved) showSimpleAlert("List Updated Successfully")
     }

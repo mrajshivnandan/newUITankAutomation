@@ -1,16 +1,18 @@
-import React,{useEffect, useState} from 'react'
+import React,{ useEffect, useState} from 'react'
 import { NavLink } from 'react-router-dom';
-import { getSupplyList } from '../utility/espFucntion';
+import { getSupplyList, saveSupplyList } from '../utility/espFucntion';
 import { setModalBtnClick, showModalAlert,loadAlerts } from '../components/AlertMsg';
+import { showSimpleAlert } from '../components/AlertMsg';
 
 const Home = (props) => {
   
   const [getuserdata, setUserdata] = useState([])
-  
+
   const loadSupplyList= async()=>{
     const slist= await getSupplyList();
     if(slist){
       setUserdata(slist);
+
     }
     
   }
@@ -18,15 +20,20 @@ const Home = (props) => {
   const deleteUser = (room,wing) => {
     // alert("Hello")
     let roomlist = getuserdata
-    setModalBtnClick(() => {
+    setModalBtnClick(async() => {
       roomlist = roomlist.filter((e) => {
       return e.room !== room || e.wing !== wing 
     });
-    
+
   console.log(roomlist);
-  setUserdata(roomlist)
+  setUserdata(roomlist);
+  const saved = await saveSupplyList(roomlist);
+  if(saved) showSimpleAlert("List Deleted Successfully")
+  
   });
   showModalAlert("Are you sure you want to delete user?", 'Confirm','red')
+
+  
   }
   
   const CurrRow = (props) => {
@@ -41,22 +48,26 @@ const Home = (props) => {
                 <div className={`badge badge-${props.Color}`}>{props.Status}</div>
             </td>
             <td className="text-center">
-              <NavLink to={`/users/view`}><button className="btn btn-primary ms-2 mt-1"><i class="fas fa-eye"></i></button></NavLink>
-              <NavLink to={`/users/edit`}><button className="btn btn-success ms-1 mt-1"><i class="fas fa-user-edit"></i></button></NavLink>
+              <NavLink to={`/users/view/${props.ID}`}><button className="btn btn-primary ms-2 mt-1"><i class="fas fa-eye"></i></button></NavLink>
+              <NavLink to={`/users/edit/${props.ID}`}><button className="btn btn-success ms-1 mt-1"><i class="fas fa-user-edit"></i></button></NavLink>
               <button className="btn btn-danger ms-2 mt-1" onClick={()=>deleteUser(props.Room,props.Wing)}><i class="fas fa-trash"></i></button>
             </td>
         </tr>
     )
   }
   
+  
   useEffect(() => {
     loadSupplyList();
     loadAlerts();
+    console.log();
+    // console.log(updata);
+    // console.log(dltdata);
   }, [])
-
   
   return (
     <>
+    
     <h1>User Details</h1>
     <div className="mt-5">
       <div className="container">

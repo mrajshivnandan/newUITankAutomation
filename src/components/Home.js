@@ -29,27 +29,27 @@ const Home = () => {
                 </div>
             </div>
             <div class="row text-center g-4">
-                <div class="col-lg-5 card col-sm-6 me-5">
+                <div class="col-lg-5 card col-sm-5 me-5">
                     <div class="team-member card-effect">
                         <img src={require("../images/RajMishra.jpg")} alt=""/>
                         <h5 class="mb-0 mt-4">Raj Mishra</h5>
                         <p>Programmer</p>
                         <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fab fa-facebook-f me-3"></i></a>
+                            <a href="#"><i class="fab fa-linkedin me-3"></i></a>
+                            <a href="#"><i class="fab fa-github"></i></a>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-5 card col-sm-6 ">
+                <div class="col-lg-5 card col-sm-5 ">
                     <div class="team-member card-effect">
                         <img src={require("../images/HimanshuThakur.jpg")} alt="" />
                         <h5 class="mb-0 mt-4">Himanshu Thakur</h5>
                         <p>Web Developer</p>
                         <div class="social-icons">
-                            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            <a href="#"><i class="me-3 fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-linkedin me-3"></i></a>
+                            <a href="#"><i class="fab fa-github"></i></a>
                         </div>
                     </div>
                 </div>
@@ -62,14 +62,15 @@ const Home = () => {
         <div class="col-lg-6 py-5">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-10 offset-md-1">
+                    <div class="col-md-10">
                         <h6 class="text-primary">WHY TO CHOOSE US</h6>
                         <h1>Best solution for your society</h1>
                         <p>This Water Automation in Modern Society [WAMS]  is to observe and manage the wastage of water due to various reasons like tap leakage, pipe leakage and water tank overflow. It can be deployed in each and every building which sends the water level information to the owner of a particular building.</p>
 
                         <div class="feature d-flex mt-5">
                             <div class="iconbox me-3">
-                                {/* <i class='bx bxs-comment-edit'></i> */}
+                                {/* <img src='https://rb.gy/xfxlmr' alt='automatic _icons' width={30} height={30}/> */}
+                                <i class="fas fa-cogs"></i>
                             </div>
                             <div>
                                 <h4>Automatic</h4>
@@ -78,7 +79,7 @@ const Home = () => {
                         </div>
                         <div class="feature d-flex">
                             <div class="iconbox me-3">
-                                {/* <i class='bx bxs-user-circle'></i> */}
+                                <img src='https://cdn1.iconfinder.com/data/icons/data-analytics-and-data-storage-line-vol-1/52/control__monitor__configuration__setting-512.png' alt='control_icons' width={30} height={30}/>
                             </div>
                             <div>
                                 <h4>Control and monitor water level</h4>
@@ -87,7 +88,8 @@ const Home = () => {
                         </div>
                         <div class="feature d-flex">
                             <div class="iconbox me-3">
-                                {/* <i class='bx bxs-download'></i> */}
+                                {/* <img src="https://rb.gy/g2ufow" alt='power_icons' width={30} height={30} /> */}
+                                <i class="fas fa-bolt"></i>
                             </div>
                             <div>
                                 <h4>Power Saver</h4>
