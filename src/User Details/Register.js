@@ -1,11 +1,12 @@
 import { useFormik } from 'formik'
 import React, {useState, useEffect} from 'react'
-import { NavLink, } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import * as Yup from 'yup'
 import { getSupplyList, saveSupplyList } from '../utility/espFucntion';
 import { showSimpleAlert } from '../components/AlertMsg';
 
 const Register = () => {
+
 
     const [supplyList, setSupplyList] = useState([]);
 
@@ -13,8 +14,15 @@ const Register = () => {
     const checkRoom = async (values) => {
         let errors = {};
         console.log(values);
+        let sameroom, samewing;
         if (supplyList.filter(function (e) { return e.room === values.room; }).length > 0) {
-        errors.room = "room exists"
+        sameroom = true;
+        }
+        if (supplyList.filter(function (e) { return e.wing === values.wing; }).length > 0) {
+        samewing = true;
+        }
+        if(sameroom && samewing){
+            errors.room = "Duplicate room"
         }
         return errors;
     }
@@ -23,7 +31,7 @@ const Register = () => {
     const roomError = 'range [0-10000]';
     const ageError = 'range [0-150]'
     const roomSchema = () => Yup.object({
-        wing: Yup.string().required("please enter room name")
+        wing: Yup.string().required("please enter wing")
         .test('Valid Character?', 'Name is Invalid', (str) => !(/[^a-zA-Z0-9_\s]+/.test(str))),
         room: Yup.number().required("enter room no.").min(0, roomError).max(10000, roomError),
         name: Yup.string().required("please enter room name")
@@ -31,27 +39,24 @@ const Register = () => {
         age: Yup.number().required("enter age.").min(0, roomError).max(150, ageError),
         email:Yup.string().email().required("please enter your email"),
         mobile:Yup.string().test('is Integer?','Enter proper number!',(str)=> !isNaN(str) && !isNaN(parseFloat(str))).min(10).max(12),
-        // ownership:Yup.string().required("select ownership").test('is valid?','Select proper value!',(str)=> !str).min(10).max(12),
         ownership: Yup.string().required("Select ownership"),
         status:Yup.string().required("select status")
     })
 
     const {values,errors, touched, handleChange, handleBlur, handleSubmit} = useFormik({
-        // initialValues: { wing: "A", room: "101", name: "test", email: "test@mail.com", age: "20", mobile: "8456893296", ownership: "", status: "" },
-        initialValues: { wing: "", room: "", name: "", email: "", age: "", mobile: "", ownership: "", status: "" },
+    // initialValues: { wing: "A", room: "101", name: "test", email: "test@mail.com", age: "20", mobile: "8456893296", ownership: "", status: "" },
+    initialValues: {wing: "", room: "", name: "", email: "", age: "", mobile: "", ownership: "", status: ""},
     validationSchema: roomSchema,
     validate: checkRoom,
     onSubmit: (values, action) => {
         console.log("submit")
         manageList("addListItem", values);
-        // action.resetForm();
     }
     })
 
     useEffect(() => {
         loadSupplyList();
-        // console.log("List is loading");
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+        console.log("List is loading");
       }, []);
     
       // reducer for adding,removing and updating supply listItem
@@ -61,21 +66,15 @@ const Register = () => {
       roomlist.push(value);
       setSupplyList(roomlist);
 
+    //   console.log(setUdata);
       const saved = await saveSupplyList(supplyList);
-      if(saved) showSimpleAlert("User Added Successfully")
+      if(saved) showSimpleAlert("List Updated Successfully")
     }
-  }
-  
-  // eslint-disable-next-line no-unused-vars
-  const saveChanges= async()=>{
-    // console.log((supplyList[0]));
-    const saved = await saveSupplyList(supplyList);
-    if(saved) showSimpleAlert("List Updated Successfully")
   }
 
   const loadSupplyList= async()=>{
     const slist= await getSupplyList();
-    console.log(typeof('before'+supplyList));
+    // console.log(typeof('before'+supplyList));
     if(slist){
     setSupplyList(slist);
     }

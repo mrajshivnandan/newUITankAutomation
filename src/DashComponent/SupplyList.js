@@ -58,9 +58,9 @@ const SupplyList = () => {
   }
 
   // list item to be displayed
-  const sList = (room, name, wing, status, toggleSupply) => {
+  const sList = (room, name, wing, status, toggleSupply, index) => {
     return (
-        <div key={wing+room} className= 'list-group-item d-flex'>
+        <div key={index} className= 'list-group-item d-flex'>
             <div className="col-2">
               <input className="form-check-input" type="checkbox" value="" id={"rm-" + room}
                 checked={status==='active'} onChange={(e) => { toggleSupply(room, name, e.target.checked,e); }} />
@@ -185,8 +185,8 @@ const SupplyList = () => {
           </div>
       </div>
     <ReactSortable className='list-group' key={seed} list={supplyList} setList={setSupplyList} ghostclassName='bg-info' style={{display:'block',minWidth:'600px'}}>
-      {supplyList.map((item) => (
-        sList(item.room,item.name,item.wing,item.status,toggleSupply)
+      {supplyList.map((item, index) => (
+        sList(item.room,item.name,item.wing,item.status,toggleSupply, index)
       ))}
     </ReactSortable>
 </div>
