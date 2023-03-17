@@ -1,8 +1,9 @@
 import React from 'react'
 import { useFormik } from 'formik'
 import {useNavigate} from 'react-router-dom'
-import appdata from '../utility/appdata'
-import { showModalAlert } from './AlertMsg'
+import { showModalAlert, showSimpleAlert } from './AlertMsg'
+import { fetchApi } from '../utility/apiHelper'
+import contactPageSchema from '../schemas/contactPageSchema'
 const ContactPage = () => {
 
     const navigate = useNavigate()
@@ -16,45 +17,42 @@ const ContactPage = () => {
         city: '',
         message : ''
     }
-
-    const {values, handleChange, handleSubmit} = useFormik({
+    const {values,errors,touched, handleChange, handleSubmit,handleBlur} = useFormik({
         initialValues: initValue,
-        validateOnBlur: false,
+        validationSchema: contactPageSchema,
         // validateOnChange: true,
         onSubmit: (values, action)=>{
-            sendMessage().then(()=>{
-                action.resetForm();
-                // navigate('/home')
+            sendMessage().then((res)=>{
+                if(res){
+                    showModalAlert("Message sent successfully");
+                    navigate('/')
+                    action.resetForm();
+                }else{
+                    showSimpleAlert("Failed to sent message","red")
+                }
             })
         }
         })
-
+        
     // sent message to the backend
     const sendMessage = async () => {
-        try {
             const {firstName, lastName, subject, email, mobile, city, message}= values;
             if( !firstName || !lastName || !subject || !email || !mobile || !city || !message){
                 alert("Please fill all the details");
                 return;
             }
-            const res = await fetch(appdata.baseUrl+"/home/contact", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body:JSON.stringify({
-                    firstName,lastName,subject,email,mobile,city,message
-                })
-            });
-            if (res.status > 201) {
-                throw new Error(res.error);
+
+            const data= {firstName,lastName,subject,email,mobile,city,message}
+            const res = await fetchApi("/home/contact",data)
+            
+            console.log("updateSensorData: ");
+            // console.trace("updateConfig: ");
+            if(res){
+                console.log(res);
+                return res;
             }
-            // const data = await res.json();
-            showModalAlert("Message sent successfully");
-            navigate('/home')
-        } catch (error) {
-            console.log(error);
-        }
+            return false;
+
     }
 
 
@@ -86,31 +84,45 @@ const ContactPage = () => {
                 <form onSubmit={handleSubmit} className="row g-3 contactForm mt-4">
                     <div className="col-md-6">
                       <label htmlFor="inputEmail4" className="form-label">First Name</label>
-                      <input type="text" name="firstName" className="form-control" onChange={handleChange} value={values.firstName} required />
+                      <input type="text" name="firstName" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.firstName} required />
+                      {/* {errors.firstName?"true":"false"} {touched.firstName?"true":"false"} */}
+                      <p className='ms-4 mt-1 mb-4 text-danger' >{errors.firstName && touched.firstName ? errors.firstName : ""}</p>
                     </div>
                     <div className="col-md-6">
                       <label htmlFor="inputPassword4" className="form-label">Last Name</label>
-                      <input type="text" name="lastName" className="form-control" onChange={handleChange} value={values.lastName}  required />
+                      <input type="text" name="lastName" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.lastName}  required />
+                      
+                      <p className='ms-4 mt-1 mb-4 text-danger' >{errors.lastName && touched.lastName ? errors.lastName : ""}</p>
                     </div>
                     <div className="col-12">
                       <label htmlFor="inputAddress" className="form-label">Subject</label>
-                      <input type="text" name="subject" className="form-control" onChange={handleChange} value={values.subject}  required />
+                      <input type="text" name="subject" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.subject}  required />
+                      
+                      <p className='ms-4 mt-1 mb-4 text-danger' >{errors.subject && touched.subject ? errors.subject : ""}</p>
                     </div>
                     <div className="col-12">
                         <label htmlFor="inputAddress" className="form-label">Email Id</label>
-                        <input type="email" name="email" className="form-control"onChange={handleChange} value={values.email}  required />
+                        <input type="email" name="email" className="form-control"onChange={handleChange} onBlur={handleBlur} value={values.email}  required />
+                        
+                        <p className='ms-4 mt-1 mb-4 text-danger' >{errors.email && touched.email ? errors.email : ""}</p>
                       </div>
                     <div className="col-md-6">
                       <label htmlFor="inputCity" className="form-label">City</label>
-                      <input type="text" name="city" className="form-control" onChange={handleChange} value={values.city}  />
+                      <input type="text" name="city" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.city}  />
+                      
+                      <p className='ms-4 mt-1 mb-4 text-danger' >{errors.city && touched.city ? errors.city : ""}</p>
                     </div>
                     <div className="col-md-6">
                         <label htmlFor="inputCity" className="form-label">Contact Number</label>
-                        <input type="number" name="mobile" className="form-control" onChange={handleChange} value={values.mobile} required />
+                        <input type="number" name="mobile" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.mobile} required />
+                        
+                        <p className='ms-4 mt-1 mb-4 text-danger' >{errors.mobile && touched.mobile ? errors.mobile : ""}</p>
                     </div>
                     <div className="col-12 mb-3">
                         <label htmlFor="exampleFormControlTextarea1" className="form-label">Message</label>
-                        <textarea className="form-control" name="message" onChange={handleChange} value={values.message} rows="3"></textarea>
+                        <textarea className="form-control" name="message" onChange={handleChange} onBlur={handleBlur} value={values.message} rows="3"></textarea>
+                        
+                        <p className='ms-4 mt-1 mb-4 text-danger' >{errors.message && touched.message ? errors.message : ""}</p>
                     </div>
                     <div className="col-12 text-center">
                       <button type="submit" className="btn btn-primary mt-3">Submit</button>

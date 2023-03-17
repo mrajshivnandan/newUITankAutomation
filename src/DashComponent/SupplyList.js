@@ -30,23 +30,6 @@ const SupplyList = () => {
       setSupplyList(roomlist)
     }
   }
-
-  // validation for adding new room
-  // const roomError = 'range [0-10000]';
-  // const roomSchema = () => Yup.object({
-  //   name: Yup.string().required("please enter room name")
-  //     .test('Valid Character?', 'Name is Invalid', (str) => !(/[^a-zA-Z0-9_\s]+/.test(str))),
-  //   room: Yup.number().required("enter room no.").min(0, roomError).max(10000, roomError)
-  // })
-
-  // // checks if room already exists
-  // const checkRoom = async (values) => {
-  //   let errors = {};
-  //   if (supplyList.filter(function (e) { return e.room === values.room; }).length > 0) {
-  //     errors.room = "room exists"
-  //   }
-  //   return errors;
-  // }
   
   //update status value on clicking checkbox
   const toggleSupply = (room, name, isChecked,evt) => {
@@ -127,13 +110,6 @@ const SupplyList = () => {
     setSupplyList(slist);
     reset()
   }
-
-  //load list when page is loaded
-  // useEffect(() => {
-  //   supplyList.forEach((e)=>{
-  //     console.log(e);
-  //   })
-  // }, [supplyList]);
 
   useEffect(() => {
     // showSimpleAlert("Hello there")

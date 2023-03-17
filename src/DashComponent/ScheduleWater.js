@@ -1,7 +1,7 @@
 import '../App.css'
 import React, { useEffect, useReducer, useState } from 'react'
 //import {loadAlerts,showModalAlert} from './AlertMsg';
-import { getHomeData, getSensorData, getSupplyList, updateHomeData } from '../utility/espFucntion';
+import { getHomeData, getSensorData, getSupplyList, updateHomeData, updateSupplyDetails } from '../utility/espFucntion';
 import { useNavigate } from 'react-router-dom';
 import { showSimpleAlert } from '../components/AlertMsg';
 
@@ -161,6 +161,11 @@ const ScheduleWater = () => {
     useEffect(() => {
         let intervalId;
         // console.log(supplyInfo.remainTime, supplyInfo.remainRoom);
+        
+        if(!(supplyInfo.remainQuantity>=0 || supplyInfo.remainTime>=0 || supplyInfo.remainRoom>=0)){
+            console.log(supplyInfo);
+            updateSupplyDetails({lastSupply:new Date().toISOString()})
+        }
         if (supplyInfo.startAfter >= 0 && supplyInfo.timerOn) {
             if (supplyInfo.remainTime >= 0 || supplyInfo.remainQuantity >= 0) {
                 timerMsg = `Motor will start in ${supplyInfo.startAfter}s`

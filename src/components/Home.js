@@ -15,7 +15,7 @@ const Home = () => {
                         <div className="col-lg-7 mx-auto text-center">
                             <h1 className="fs-10 display-4 text-white">Tank Automation</h1>
                             <p className="fs-5 text-white my-3">Tank Automation provides equitable water supply, reliability, completely visibility into your tanks, operate automatically, flexibility and it reduces the wastage of water</p>
-                            <Link to="/home" className="btn me-2 btn-primary">Contact Us </Link>
+                            <Link to="/contact" className="btn me-2 btn-primary">Contact Us </Link>
                         </div>
                     </div>
                 </div>
@@ -36,9 +36,9 @@ const Home = () => {
                                 <h5 className="mb-0 mt-4">Raj Mishra</h5>
                                 <p>Programmer</p>
                                 <div className="social-icons">
-                                    <Link to="/home"><i className="fab fa-facebook-f" aria-hidden="true"></i></Link>
-                                    <Link to="/home"><i className="fab fa-instagram"></i></Link>
-                                    <Link to="/home"><i className="fa fa-facebook" aria-hidden="true"></i></Link>
+                                    <a href="#team"><i className="fab fa-facebook-f me-3"></i></a>
+                                    <a href="#team"><i className="fab fa-linkedin me-3"></i></a>
+                                    <a href="#team"><i className="fab fa-github"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -48,9 +48,9 @@ const Home = () => {
                                 <h5 className="mb-0 mt-4">Himanshu Thakur</h5>
                                 <p>Web Developer</p>
                                 <div className="social-icons">
-                                    <Link to="/home"><i className="fa fa-facebook" aria-hidden="true"></i></Link>
-                                    <Link to="/home"><i className="fa fa-twitter" aria-hidden="true"></i></Link>
-                                    <Link to="/home"><i className="fa fa-facebook" aria-hidden="true"></i></Link>
+                                    <a href="#team"><i className="fab fa-facebook-f me-3"></i></a>
+                                    <a href="#team"><i className="fab fa-linkedin me-3"></i></a>
+                                    <a href="#team"><i className="fab fa-github"></i></a>
                                 </div>
                             </div>
                         </div>

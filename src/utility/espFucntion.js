@@ -88,8 +88,8 @@ export const loadSensorData = async (setSensorData) => {
   
   const res = await getSensorData();
   
-    console.log("loadSensorData: ");
-    console.log(res);
+    // console.log("loadSensorData: ");
+    // console.log(res);
     if(res){
       setSensorData(res);
       loadProgBar();
@@ -193,6 +193,34 @@ export const getSupplyList = async () => {
     if(res.supplyList){
       loadProgBar();
       return res.supplyList.roomList;
+    }else{
+      return false;
+    }
+}
+
+// saves the supply list to the database
+export const getSupplyList2 = async () => {
+  
+  const res = await fetchApi("/getSupplyList")
+  
+    // console.log("supplyList: ");
+    // console.log(res);
+    if(res.supplyList){
+      loadProgBar();
+      return res.supplyList;
+    }else{
+      return false;
+    }
+}
+
+// saves the supply list to the database
+export const updateSupplyDetails = async (supplyDetails) => {
+  
+  const res = await fetchApi("/updateSupplyDetails",supplyDetails)
+  
+    if(res){
+      console.log(res);
+      return res;
     }else{
       return false;
     }

@@ -207,3 +207,10 @@ input:checked+.slider:before {
 #play-spinner{
   opacity: 0.5;
 }
+.disabled {
+  opacity:0.6;
+  cursor: not-allowed;
+}
+.disabled a{
+  pointer-events:none;
+}

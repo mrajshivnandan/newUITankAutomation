@@ -1,6 +1,6 @@
 import React from 'react'
 
-const OneTitleCard = (props) => {
+export const OneTitleCard = (props) => {
     const borderclass = `card border-left-${props.color} shadow h-100 py-2`
     const titleclass = `text-xs font-weight-bold text-${props.color} text-uppercase mb-1`;
     const iconclass = `fas fa-${props.icon?props.icon:'calendar'} fa-2x text-gray-300`;
@@ -54,14 +54,5 @@ export const OneProgressCard = (props) => {
 }
 
 
-export const MiniCard = () => {
-  return (
-    <div className="row mt-4">
-        <OneTitleCard color= 'primary' title= 'Last Filled' content= 'yesterday' icon= 'calendar'/>
-        <OneTitleCard color= 'success' title= 'Next Scheduled' content= 'not scheduled' icon= 'hourglass-half'/>
-        <OneTitleCard color= 'warning' title= 'Upper tank filled' content= 'not filled' icon= 'fill'/>
-    </div>
-  )
-}
 
   

@@ -1,11 +1,12 @@
 import { useFormik } from 'formik'
 import React, {useState, useEffect} from 'react'
-import { NavLink, } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
 import { getSupplyList, saveSupplyList } from '../utility/espFucntion';
 import { showSimpleAlert } from '../components/AlertMsg';
 
 const Register = () => {
+    const navigate = useNavigate()
 
     const [supplyList, setSupplyList] = useState([]);
 
@@ -37,8 +38,8 @@ const Register = () => {
     })
 
     const {values,errors, touched, handleChange, handleBlur, handleSubmit} = useFormik({
-        // initialValues: { wing: "A", room: "101", name: "test", email: "test@mail.com", age: "20", mobile: "8456893296", ownership: "", status: "" },
-        initialValues: { wing: "", room: "", name: "", email: "", age: "", mobile: "", ownership: "", status: "" },
+    // initialValues: { wing: "A", room: "101", name: "test", email: "test@mail.com", age: "20", mobile: "8456893296", ownership: "", status: "" },
+    initialValues: { wing: "", room: "", name: "", email: "", age: "", mobile: "", ownership: "", status: "" },
     validationSchema: roomSchema,
     validate: checkRoom,
     onSubmit: (values, action) => {
@@ -50,8 +51,8 @@ const Register = () => {
 
     useEffect(() => {
         loadSupplyList();
-        // console.log("List is loading");
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+        console.log("List is loading");
+        // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
     
       // reducer for adding,removing and updating supply listItem
@@ -61,17 +62,20 @@ const Register = () => {
       roomlist.push(value);
       setSupplyList(roomlist);
 
+    //   console.log(setUdata);
       const saved = await saveSupplyList(supplyList);
-      if(saved) showSimpleAlert("User Added Successfully")
+      if(saved) {
+        showSimpleAlert("List Updated Successfully")
+        navigate("/users")
+      }
     }
   }
   
-  // eslint-disable-next-line no-unused-vars
-  const saveChanges= async()=>{
-    // console.log((supplyList[0]));
-    const saved = await saveSupplyList(supplyList);
-    if(saved) showSimpleAlert("List Updated Successfully")
-  }
+//   const saveChanges= async()=>{
+//     // console.log((supplyList[0]));
+//     const saved = await saveSupplyList(supplyList);
+//     if(saved) showSimpleAlert("List Updated Successfully")
+//   }
 
   const loadSupplyList= async()=>{
     const slist= await getSupplyList();
@@ -120,7 +124,7 @@ const Register = () => {
             <div className="mb-3 col-lg-6 col-md-6 col-12">
                 <label htmlFor="exampleInputPassword1" className="form-label">Ownership</label>
                 <select className="form-select" aria-label="Default select example" name='ownership' value={values.ownership} onBlur={handleBlur} onChange={handleChange}>
-                    <option value="" disabled hidden>Please Select...</option>
+                    <option value="" disabled selected hidden>Please Select...</option>
                     <option value="1">Owner</option>
                     <option value="2">Tenant</option>
                 </select>
@@ -129,7 +133,7 @@ const Register = () => {
             <div className="mb-3 col-lg-6 col-md-6 col-12">
                 <label htmlFor="exampleInputPassword1" className="form-label">Status</label>
                 <select className="form-select" aria-label="Default select example" name="status" value={values.status} onBlur={handleBlur} onChange={handleChange} >
-                    <option value="" disabled hidden>Please Choose...</option>
+                    <option value="" disabled selected hidden>Please Choose...</option>
                     <option value="active">Active</option>
                     <option value="inactive">Inactive</option>
                 </select>

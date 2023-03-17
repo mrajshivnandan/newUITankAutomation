@@ -53,7 +53,8 @@ export const logoutAdmin= async(appdata)=> {
             throw new Error(res.Error);
         }
         // remove the existing authentication token
-        Cookies.remove('jwtoken',{path:''});
+        Cookies.remove('jwtoken',{path:'/'});
+        document.cookie = 'jwtoken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
         const placholder = {
             _id:"295179",
             name:"your name",

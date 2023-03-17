@@ -99,7 +99,7 @@ function Sidebar() {
                         </div>
 
                         {/*  <!-- Nav Item - Pages Collapse Menu --> */}
-                        <li className="nav-item">
+                        <li className="nav-item disabled">
                             <a className="nav-link" href=' '>
                                 <i className="fas fa-fw fa-cog"></i>
                                 <span>System Health</span>

@@ -4,9 +4,10 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { CardFill} from '../accessory/progressbar/FillProgress';
 import { EspContext } from './MyDashboard';
 import { fetchInfo } from '../utility/appdata';
-import { loadProgBar, loadSensorData } from '../utility/espFucntion';
+import { getSupplyList2, loadProgBar, loadSensorData } from '../utility/espFucntion';
 import { useNavigate } from 'react-router-dom';
-import { MiniCard, OneProgressCard } from '../accessory/MiniCard';
+import { OneTitleCard, OneProgressCard } from '../accessory/MiniCard';
+import moment from 'moment/moment';
 // let percentage = 44;
 
 const Dashboard = () => {
@@ -22,11 +23,21 @@ const Dashboard = () => {
     return ref; //in the end, return the current ref value.
 }
 const prevData = usePrevious(espData.index);
+const lastSupply= useRef("not filled")
 
   useEffect(() => {
     
     let loadDataInterval;
     let repeatData = 0;
+    getSupplyList2().then((data)=>{
+      console.log(data)
+      const isoDate= data.lastSupply
+      let sdate= new Date(isoDate);
+      console.log(sdate);
+      let ndate= moment(sdate).fromNow()
+      console.log(ndate)
+      lastSupply.current= ndate
+    })
     if (sessionStorage.getItem('loggedin')) {
         console.log("started interval ");
         loadSensorData(setEspData);
@@ -83,7 +94,11 @@ const prevData = usePrevious(espData.index);
             <i className="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
         </div>
 
-        <MiniCard/>
+    <div className="row mt-4">
+        <OneTitleCard color= 'primary' title= 'Last Supplied' content= {lastSupply.current+''} icon= 'calendar'/>
+        <OneTitleCard color= 'success' title= 'Next Scheduled' content= 'not scheduled' icon= 'hourglass-half'/>
+        <OneTitleCard color= 'warning' title= 'Upper tank filled' content= 'not filled' icon= 'fill'/>
+    </div>
        {/* <div className="border-bottom-primary shadow mb-4" style={{opacity:'0.6'}}></div> */}
 
         <div className='mt-4 row'>

@@ -69,8 +69,8 @@ function MyDashboard() {
         <Route exact path="/" element={<Dashboard />} />
         <Route path="/users" element={<Home />} />
         <Route path="/user/register" element={<Register />} />
-        <Route path="/users/edit" element={<Edit />} />
-        <Route path="/users/view" element={<Details />} />
+        <Route path="/users/edit/:id" element={<Edit />} />
+        <Route path="/users/view/:id" element={<Details />} />
         <Route path="/profile" element={<Profile/>} />
         <Route path="/getdata" element={<GetData/>} />
         <Route path="/contactus" element={<Contactus/>} />
