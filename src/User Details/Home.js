@@ -68,7 +68,7 @@ const Home = (props) => {
   return (
     <>
     
-    <h1>User Details</h1>
+    <h2 className="text-center text-dark mb-3">User Details</h2>
     <div className="mt-5">
       <div className="container">
         <div className="add_btn mt-2 mb-2 text-right">

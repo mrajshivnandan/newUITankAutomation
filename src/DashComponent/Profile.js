@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { userInfo } from '../utility/appdata';
+import { adminInfo } from '../utility/appdata';
 import { loadAdminData } from '../utility/admin';
 import { AdminContext } from './MyDashboard';
-const imgPath = require('../images/avatar3.png');
+import ProfilePic from './ProfilePic'
+// const imgPath = require('../images/avatar3.png');
 
 let about = document.getElementById('aboutProfile');
 let otherinfo = document.getElementById('otherInfo');
@@ -50,10 +51,10 @@ const Profile = () => {
         about = document.getElementById('aboutProfile');
         otherinfo = document.getElementById('otherInfo');
         loadcomp = document.querySelectorAll('.glowme');
-        if (!userInfo.creationdate) {
+        if (!adminInfo.creationdate) {
             loadProfilePage();
         } else {
-            setAdminData(userInfo);
+            setAdminData(adminInfo);
         }
         // console.log('about: ',about,'otherinfo ',otherinfo);
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -124,15 +125,16 @@ const Profile = () => {
 
     return (
         <>
-            <div className="card-body p-md-5">
-                <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 ">Profile</p>
+            <h2 className="text-center text-dark mb-3">Profile</h2>
+            <div className="card p-md-4 m-2">
 
                 <form method="get">
                     <div className="row justify-content-center mb-4">
-                        <div className="col-sm-10 col-md-4 order-1 d-flex ">
-                            <div className="flex-fill p-lg-2" style={{ width: '18rem' }}>
-                                <img src={imgPath} width="200px"
-                                    className="img-fluid mb-2 profile_img" alt="login_img" />
+                        <div className="col-sm-10 col-lg-4 order-1 d-flex ">
+                            <div className="flex-fill p-lg-2 ps-2" style={{ width: '18rem' }}>
+                                {/* <img src={imgPath} width="200px"
+                                    className="img-fluid mb-2 profile_img" alt="login_img" /> */}
+                                    <ProfilePic editMode={true}/>
                                 <div className="p-0 w-100">
                                     <h5 className="card-title">Society Name</h5>
                                     <p className="card-text">Location of society</p>
@@ -148,8 +150,8 @@ const Profile = () => {
                                 </div> */}
                             </div>
                         </div>
-                        <div className="col-sm-10 col-md-8 d-flex flex-column order-2 mt-4" >
-                            <div className="col-md-10 col-lg-4 col-xl-3 order-1 d-flex mw-100 justify-content-between">
+                        <div className="col-sm-10 col-md-10 col-lg-8 d-flex flex-column order-2 mt-4" >
+                            <div className="col-lg-4 col-xl-3 order-1 d-flex mw-100 justify-content-between">
                                 <div className='placeholder-glow' >
                                     <div className='glowme text_bold'>{adminData.name}</div>
                                     <div className="w-100"></div>
@@ -162,7 +164,7 @@ const Profile = () => {
                                 </div>
                             </div>
 
-                            <div className="col-md-10 col-lg-8 col-xl-9 mw-100 d-flex order-2 mt-4">
+                            <div className="col-lg-8 col-xl-9 mw-100 d-flex order-2 mt-4">
                                 <div className="d-flex flex-column flex-fill">
                                     <ul className="nav nav-tabs">
                                         <li className="nav-item">

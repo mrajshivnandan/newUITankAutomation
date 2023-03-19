@@ -4,7 +4,7 @@ import { showModalAlert, showSimpleAlert } from './AlertMsg';
 import { useFormik } from 'formik';
 import validator from 'validator';
 import { NavLink, useNavigate } from 'react-router-dom'
-import appdata, { userInfo } from '../utility/appdata';
+import appdata, { adminInfo } from '../utility/appdata';
 import { getAdminData } from '../utility/admin';
 import * as Yup from 'yup';
 
@@ -79,7 +79,7 @@ const VerifyEmail = () => {
     // };
 
     useEffect(() => {
-        if (sessionStorage.getItem('loggedin') && !userInfo.creationdate) {
+        if (sessionStorage.getItem('loggedin') && !adminInfo.creationdate) {
             getAdminData(appdata).then((d) => {
                 if(d)
                 setEmail(d.email)
@@ -87,9 +87,9 @@ const VerifyEmail = () => {
         } else if (!sessionStorage.getItem('loggedin')) {
             console.log('Unauthorized');
         } else {
-            setEmail(userInfo.email);
+            setEmail(adminInfo.email);
         }
-        // console.log(userInfo)
+        // console.log(adminInfo)
     }, [])
 
 

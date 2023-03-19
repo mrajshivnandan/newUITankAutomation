@@ -17,7 +17,7 @@ import SupplyList from './SupplyList';
 import Dashboard from "./Dashboard";
 
 import { Routes, Route, useNavigate} from "react-router-dom";
-import { userInfo } from '../utility/appdata';
+import { adminInfo } from '../utility/appdata';
 import { loadAdminData } from '../utility/admin';
 
 let initValue = {
@@ -35,7 +35,7 @@ export const AdminContext = createContext("");
 function MyDashboard() {
   const navigate = useNavigate();
   const [espData, setEspData] = useState(initValue);
-  const [adminData, setAdminData] = useState(userInfo);
+  const [adminData, setAdminData] = useState(adminInfo);
 
   useEffect(() => {
     // if user is logged in then only allow else send user to login page
@@ -43,14 +43,14 @@ function MyDashboard() {
         navigate('/login');
     }
     //getting asmin info after the page is loaded
-    if (!userInfo.creationdate) {
+    if (!adminInfo.creationdate) {
       loadAdminData()
           .then((data) => {
               if(data)
               setAdminData(data);
           })
     } else {
-        setAdminData(userInfo);
+        setAdminData(adminInfo);
     }
     // console.log('about: ',about,'otherinfo ',otherinfo);
     // eslint-disable-next-line react-hooks/exhaustive-deps

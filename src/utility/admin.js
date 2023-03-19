@@ -1,4 +1,4 @@
-import appdata, {userInfo } from "./appdata";
+import appdata, {adminInfo } from "./appdata";
 const Cookies = require('js-cookie');
 
 //to get the admin data from the backend
@@ -31,7 +31,7 @@ export const loadAdminData = async() =>{
     const data = await getAdminData();
     if(data){
         console.log(data);
-        Object.entries(data).forEach((e) => {if(userInfo[e[0]]!==undefined){userInfo[e[0]]= e[1]}});
+        Object.entries(data).forEach((e) => {if(adminInfo[e[0]]!==undefined){adminInfo[e[0]]= e[1]}});
     }
     return data;
 }
@@ -65,8 +65,8 @@ export const logoutAdmin= async(appdata)=> {
         }
         
         sessionStorage.removeItem('loggedin')
-        Object.entries(placholder).forEach((e) => {if(userInfo[e[0]]!==undefined){userInfo[e[0]]= e[1]}});
-        // console.log(userInfo);
+        Object.entries(placholder).forEach((e) => {if(adminInfo[e[0]]!==undefined){adminInfo[e[0]]= e[1]}});
+        // console.log(adminInfo);
     } catch (error) {
         console.log(error);
     }

@@ -3,7 +3,7 @@ const appdata = {
     baseUrl: "http://localhost:8000",
     // baseUrl: "http://192.168.43.14:8000"
 }
-export const userInfo = {
+export const adminInfo = {
     _id:"295179",
     name:"your name",
     email:"example@mail.co",

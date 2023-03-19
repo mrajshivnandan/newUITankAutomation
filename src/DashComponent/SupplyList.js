@@ -119,9 +119,9 @@ const SupplyList = () => {
 
 
   return (
+    <>
+    <h2 className="text-center text-dark mb-3">Supply List</h2>
     <div className='m-3'>
-  
-  <h2 className='text-center mb-3'>Supply List</h2>
       {/* <form onSubmit={handleSubmit}>
         <div className="row g-3 mb-4">
           <div className="col-sm-7">
@@ -174,6 +174,7 @@ const SupplyList = () => {
       </div>
 
     </div>
+    </>
   )
 }
 

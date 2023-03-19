@@ -92,11 +92,10 @@ const Configure = () => {
     return (
         <>
 
+            <h2 className="text-center text-dark mb-3">Configure</h2>
             <div id="row text-center">
                 <div className='m-4 mx-auto d-flex flex-column pe-2 w-80 col-sm-11 col-md-10 col-xl-8'>
-
-                    <h2 className='text-center'>Configure</h2>
-
+                
                     <form onSubmit={handleSubmit} method="POST" className="mx-1 mx-md-4">
 
                         <div className="placeholder-glow d-flex flex-column mt-4 profileSection">

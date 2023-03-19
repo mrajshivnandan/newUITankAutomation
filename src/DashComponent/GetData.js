@@ -77,10 +77,10 @@ const GetData = () => {
     return (
         <>
 
+            <h2 className="text-center text-dark mb-3">Water Monitoring & control</h2>
             <div id="row text-center">
                 <div className='m-4 mx-auto d-flex flex-column pe-2 w-80 col-lg-12 col-xl-10'>
 
-                    <h2 className='text-center'>Water Monitoring & control</h2>
                     <p className='text-center text-warning'>{repeatedData ? "This may be some old data" : ""}</p>
 
                     <div className='row'>

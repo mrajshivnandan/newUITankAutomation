@@ -1,6 +1,5 @@
 import '../App.css'
 import React, { useEffect, useReducer, useState } from 'react'
-//import {loadAlerts,showModalAlert} from './AlertMsg';
 import { getHomeData, getSensorData, getSupplyList, updateHomeData, updateSupplyDetails } from '../utility/espFucntion';
 import { useNavigate } from 'react-router-dom';
 import { showSimpleAlert } from '../components/AlertMsg';
@@ -157,6 +156,10 @@ const ScheduleWater = () => {
         setSupplyInfo({ type: "setTimerOn", value: true });
     }
 
+    const formattedTime=(sec)=>{
+        return `${parseInt(sec/86400)}days ${parseInt(sec/3600)%24}hr ${parseInt(sec/60)%60}min ${parseInt(sec%60)}s`
+    }
+
     // use effect based timer
     useEffect(() => {
         let intervalId;
@@ -168,7 +171,7 @@ const ScheduleWater = () => {
         }
         if (supplyInfo.startAfter >= 0 && supplyInfo.timerOn) {
             if (supplyInfo.remainTime >= 0 || supplyInfo.remainQuantity >= 0) {
-                timerMsg = `Motor will start in ${supplyInfo.startAfter}s`
+                timerMsg = `Motor will start in ${formattedTime(supplyInfo.startAfter)}`
                 intervalId = setInterval(() => {
                     setSupplyInfo({ type: "decStartAfter" });
                     console.log(supplyInfo.startAfter);
@@ -213,7 +216,7 @@ const ScheduleWater = () => {
                     }, 1100);
                     updateHomeData({ roomNo: currentRoom.room, supplyOn: true });
                 }
-                timerMsg = `Motor will stop in ${supplyInfo.remainTime}s for room ${currentRoom.room}, remaining ${supplyInfo.remainRoom - 1}`
+                timerMsg = `Motor will stop in ${formattedTime(supplyInfo.remainTime)} for room ${currentRoom.room}, remaining ${supplyInfo.remainRoom - 1}`
             }
             intervalId = setInterval(() => {
                 if (supplyInfo.remainRoom > 0) {
@@ -434,14 +437,13 @@ const ScheduleWater = () => {
     return (
         <>
 
+            <h2 className="text-center text-dark mb-3">Schedule Supply</h2>
             <div id="row text-center">
                 <div className='m-4 mx-auto d-flex flex-column pe-2 w-80 col-lg-10 col-xl-8'>
 
-                    <h2 className='text-center'>Schedule Supply</h2>
-
-                    <div className='mx-3'>
+                    <div className='card p-4'>
                         <div className='mb-2'>Set Motor start time :</div>
-                        <input className="mx-3 form-control mb-2" type="datetime-local" onChange={e => setScheduleTime({ ...scheduleTime, startTime: e.target.value })}
+                        <input className="me-4 form-control mb-2" type="datetime-local" onChange={e => setScheduleTime({ ...scheduleTime, startTime: e.target.value })}
                             value={scheduleTime.startTime} id="motorStartTime" name="motorStartTime" />
 
                         <div className="mb-1" onChange={e => { setsupplyBy(e.target.value) }} value={supplyBy}>
@@ -454,10 +456,11 @@ const ScheduleWater = () => {
                         </div>
 
                         <div className='mb-2'>Stop motor after {supplyBy === 'time' ? "in (minutes) :" : "(quantity)"}</div>
-                        <input className="mx-3 form-control mb-2" type="number" id="motorStopTime" placeholder={supplyBy === 'time' ? "Time in minutes" : "Quantity in mL"}
+                        <input className="me-4 form-control mb-2" type="number" id="motorStopTime" placeholder={supplyBy === 'time' ? "Time in minutes" : "Quantity in mL"}
                             onChange={e => setScheduleTime({ ...scheduleTime, stopAfter: e.target.value })} value={scheduleTime.stopAfter} name="motorStopTime" min='1' max='100' />
 
                         <p className='ms-4 mt-2 mb-3 text-danger' >{timerMsg}</p>
+                        {/* <p className='ms-4 mt-2 mb-3 text-danger' >{new Date(Date.now()+supplyInfo.startAfter*1000).toString()}</p> */}
 
                         <div className="container d-flex justify-content-around flex-sm-row flex-column">
                             <input className="btn btn-success w-70 mb-2" type="submit" value="Set Timer" onClick={startTimer} />

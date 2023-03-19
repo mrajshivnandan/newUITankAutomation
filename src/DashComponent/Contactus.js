@@ -3,7 +3,7 @@ import React, { useEffect} from 'react'
 import {useFormik} from 'formik';
 import contactSchema from '../schemas/contactSchema';
 import {loadAlerts,showModalAlert} from '../components/AlertMsg';
-import appdata, {userInfo} from '../utility/appdata';
+import appdata, {adminInfo} from '../utility/appdata';
 import { loadAdminData } from '../utility/admin';
 
 let loadcomp= document.querySelectorAll('.glowme');
@@ -77,24 +77,24 @@ const Contactus = () => {
         
         loadAlerts();
         loadcomp= document.querySelectorAll('.glowme');
-        if(!userInfo.creationdate && sessionStorage.getItem('loggedin')){
+        if(!adminInfo.creationdate && sessionStorage.getItem('loggedin')){
             loadContactPage();
         }else{
             
-        setFieldValue('name',userInfo.name)
-        setFieldValue('email',userInfo.email)
-        setFieldValue('phone',userInfo.phone)
+        setFieldValue('name',adminInfo.name)
+        setFieldValue('email',adminInfo.email)
+        setFieldValue('phone',adminInfo.phone)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
   return (
     <>
+        <h2 className="text-center text-dark mb-3">Contact us</h2>
         <div className="card-body p-md-5">
             <div className="row justify-content-center">
                 <div className="col-md-11 col-lg-9 col-xl-7 order-2 order-lg-1">
 
-                    <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Contact us</p>
 
                     <form onSubmit={handleSubmit} method="POST" className="mx-1 mx-md-4">
 

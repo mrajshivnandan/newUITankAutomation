@@ -1,6 +1,6 @@
 import {React, useEffect} from 'react'
 import {NavLink,useNavigate} from 'react-router-dom'
-import appdata,{userInfo} from '../utility/appdata';
+import appdata,{adminInfo} from '../utility/appdata';
 import Cookies from 'js-cookie';
 import {useFormik} from 'formik';
 import loginSchema from '../schemas/loginSchema';
@@ -58,8 +58,8 @@ const Login = () => {
         }else{
             sessionStorage.setItem('loggedin','true')
             showSimpleAlert("Login Successful");
-            const userinfo = data.userData;
-            Object.entries(userinfo).forEach((e) => {if(userInfo[e[0]]!==undefined){userInfo[e[0]]= e[1]}});
+            const adminData = data.userData;
+            Object.entries(adminData).forEach((e) => {if(adminInfo[e[0]]!==undefined){adminInfo[e[0]]= e[1]}});
             
             console.log("Login Successful");
             const token= Cookies.get('jwtoken');
@@ -67,7 +67,7 @@ const Login = () => {
                 Cookies.set('jwtoken',data.token);
             }
             // console.log(state,Cookies.get());
-            if(userinfo.verified){
+            if(adminInfo.verified){
                 navigate('/');
                 // setTimeout(() => {
                 //     console.log("Logged in");

@@ -37,9 +37,19 @@ const Register = () => {
         status:Yup.string().required("select status")
     })
 
+    const initValue = {
+        wing: "",
+        room: "",
+        name: "",
+        email: "",
+        age: "",
+        mobile: "",
+        ownership: "",
+        status: "",
+      }
     const {values,errors, touched, handleChange, handleBlur, handleSubmit} = useFormik({
     // initialValues: { wing: "A", room: "101", name: "test", email: "test@mail.com", age: "20", mobile: "8456893296", ownership: "", status: "" },
-    initialValues: { wing: "", room: "", name: "", email: "", age: "", mobile: "", ownership: "", status: "" },
+    initialValues: initValue,
     validationSchema: roomSchema,
     validate: checkRoom,
     onSubmit: (values, action) => {
