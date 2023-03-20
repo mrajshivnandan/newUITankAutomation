@@ -1,34 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { adminInfo } from '../utility/appdata';
-import { loadAdminData } from '../utility/admin';
 import { AdminContext } from './MyDashboard';
-import ProfilePic from './ProfilePic'
-// const imgPath = require('../images/avatar3.png');
 
 let about = document.getElementById('aboutProfile');
 let otherinfo = document.getElementById('otherInfo');
-let loadcomp = document.querySelectorAll('.glowme');
 
 const Profile = () => {
     const navigate = useNavigate();
-    const {adminData, setAdminData} = useContext(AdminContext)
+    const {adminData} = useContext(AdminContext)
     const [selectedPart, setSelectedPart] = useState('about');
-
-    // getting data from backend to fill profile page data
-    const loadProfilePage = async () => {
-
-        //applying placeholders while data is being fetched from backend
-        loadcomp.forEach((elem) => { elem.classList.add('placeholder'); })
-        loadAdminData()
-            .then((data) => {
-                if(data)
-                setAdminData(data);
-            })
-            .finally(() => {
-                loadcomp.forEach((elem) => { elem.classList.remove('placeholder') });
-            })
-    }
 
     //change the content when tabs are clicked
     const changeContent = (changeTo) => {
@@ -50,13 +30,7 @@ const Profile = () => {
         //getting components after the page is loaded
         about = document.getElementById('aboutProfile');
         otherinfo = document.getElementById('otherInfo');
-        loadcomp = document.querySelectorAll('.glowme');
-        if (!adminInfo.creationdate) {
-            loadProfilePage();
-        } else {
-            setAdminData(adminInfo);
-        }
-        // console.log('about: ',about,'otherinfo ',otherinfo);
+        
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -132,9 +106,14 @@ const Profile = () => {
                     <div className="row justify-content-center mb-4">
                         <div className="col-sm-10 col-lg-4 order-1 d-flex ">
                             <div className="flex-fill p-lg-2 ps-2" style={{ width: '18rem' }}>
-                                {/* <img src={imgPath} width="200px"
-                                    className="img-fluid mb-2 profile_img" alt="login_img" /> */}
-                                    <ProfilePic editMode={true}/>
+                                
+                                <div className='d-flex justify-content-center placeholder-glow'>
+                                    <label id='profileLabel' htmlFor="photo-upload" className="custom-file-upload fas m-2" style={{pointerEvents:'none'}}>
+                                    <div className="img-wrap img-upload" >
+                                        <img id="profileImg" className='img-fluid glowme' htmlFor="photo-upload" alt='' src={adminData.profilePic}/>
+                                    </div>
+                                    </label>
+                                </div>
                                 <div className="p-0 w-100">
                                     <h5 className="card-title">Society Name</h5>
                                     <p className="card-text">Location of society</p>
@@ -160,7 +139,7 @@ const Profile = () => {
                                     <div className='glowme text-secondry'>Other info</div>
                                 </div>
                                 <div>
-                                    <button type="button" className="btn btn-light">Edit Profile</button>
+                                    <button type="button" onClick={()=>navigate('/editAdmin')} className="btn btn-light">Edit Profile</button>
                                 </div>
                             </div>
 

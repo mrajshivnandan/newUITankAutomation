@@ -1,3 +1,4 @@
+import { fetchApi } from "./apiHelper";
 import appdata, {adminInfo } from "./appdata";
 const Cookies = require('js-cookie');
 
@@ -71,3 +72,28 @@ export const logoutAdmin= async(appdata)=> {
         console.log(error);
     }
 }
+
+// saves the alerts to the database
+export const saveTankAlerts = async (alerts) => {
+    
+    const res = await fetchApi("/saveAlerts",alerts)
+    
+      if(res){
+        console.log(res);
+        return res;
+      }else{
+        return false;
+      }
+  }
+
+// gets the alerts from the database
+export const getTankAlert = async () => {
+    
+    const res = await fetchApi("/getAlerts")
+    
+      if(res.adminAlerts){
+        return res.adminAlerts;
+      }else{
+        return false;
+      }
+  }

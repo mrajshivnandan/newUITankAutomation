@@ -15,7 +15,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [repeatedData, setRepeatedData] = useState(false);
 
-  function usePrevious(value) {
+function usePrevious(value) {
     const ref = useRef();
     useEffect(() => {
         ref.current = value; //assign the value of ref to the argument

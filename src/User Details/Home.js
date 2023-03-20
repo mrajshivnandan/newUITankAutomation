@@ -7,12 +7,16 @@ import { showSimpleAlert } from '../components/AlertMsg';
 const Home = (props) => {
   
   const [getuserdata, setUserdata] = useState([])
+  const [loading, setLoading] = useState(false)
 
   const loadSupplyList= async()=>{
-    const slist= await getSupplyList();
+    setLoading(true)
+    const slist= await getSupplyList()
+    .finally(()=>{
+      setLoading(false)
+    })
     if(slist){
       setUserdata(slist);
-
     }
     
   }
@@ -94,10 +98,9 @@ const Home = (props) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {getuserdata.map((item, id) => {
+                            {!loading?getuserdata.map((item, id) => {
                               return (
-                                <>  
-                                <CurrRow 
+                                <CurrRow key={id}
                                 ID= {id+1} 
                                 Name= {item.name} 
                                 Room= {item.room}
@@ -106,9 +109,20 @@ const Home = (props) => {
                                 Color= {item.status === "active" ? "success": "info"}
                                 />
 
-                                </>
                               )
-                            })}
+                            }):
+                            [0,1].map((item, id) => {
+                              return (
+                                <tr key={id}><td colSpan={5}>
+                                <div className="text-center">
+                                  <div className="spinner-border" role="status">
+                                    <span className=""></span>
+                                  </div>
+                                </div>
+                                </td></tr>
+                              )
+                            })
+                            }
                         </tbody>
                     </table>
                 </div>

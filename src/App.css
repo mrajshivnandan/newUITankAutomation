@@ -231,6 +231,7 @@ input[type="file"] {
   margin-bottom: 25px;
 }
 
+
 .img-wrap{
   position: relative;
   max-width: 200px;
@@ -257,9 +258,27 @@ input[type="file"] {
 .img-upload:hover:before{
  opacity: 1;
 }
+
 #profileImg {
-  width: auto;
-  height: 100%;
+  transition: ease all .5s;
+}
+@media screen and (max-width: 9920px) {
+  #profileImg {
+    width: 200px;
+    height: 200px;
+  }
+}
+@media screen and (max-width: 600px) {
+  #profileImg {
+    width: 160px;
+    height: 160px;
+  }
+}
+@media screen and (max-width: 400px) {
+  #profileImg {
+    width: 120px;
+    height: 120px;
+  }
 }
 
 #profileLabel{
@@ -281,4 +300,17 @@ input[type="file"] {
 }
 #photo-upload::placeholder{
   color: #bebebe;
+}
+
+/*loading dots*/
+.dot-loader {
+  width: 64px;
+  height: 12px;
+  background:
+    radial-gradient(circle 6px, #FFF 100%, transparent 0),
+    radial-gradient(circle 6px, #FFF 100%, transparent 0);
+  background-size:12px 12px;
+  background-position: left center , right center ;
+  background-repeat: no-repeat;
+  position: relative;
 }

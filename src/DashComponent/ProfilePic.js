@@ -1,12 +1,7 @@
-import React, { useState } from 'react'
-const imgPath = require('../images/avatar3.png');
+import React from 'react'
+import { adminInfo } from '../utility/appdata';
 
-const Profile2 = ({editMode}) => {
-  const [profileImg,setProfileImg] = useState({
-    file: '',
-    imagePreviewUrl: imgPath,
-    active: 'edit'
-  })
+const Profile2 = ({editMode,profileImg,setProfileImg}) => {
 
   const photoUpload = (e) =>{
     e.preventDefault();
@@ -15,6 +10,7 @@ const Profile2 = ({editMode}) => {
     reader.onloadend = () => {
       setProfileImg({...profileImg,file: file,
         imagePreviewUrl: reader.result});
+        adminInfo.profilePic= reader.result
         // console.log(reader.result);
     }
     reader.readAsDataURL(file);

@@ -1,8 +1,10 @@
 import '../App.css'
-import React, { useEffect, useReducer, useState } from 'react'
+import React, { useContext, useEffect, useReducer, useState } from 'react'
 import { getHomeData, getSensorData, getSupplyList, updateHomeData, updateSupplyDetails } from '../utility/espFucntion';
 import { useNavigate } from 'react-router-dom';
 import { showSimpleAlert } from '../components/AlertMsg';
+import { getTankAlert, saveTankAlerts } from '../utility/admin';
+import { AlertContext } from './MyDashboard';
 
 const initSchedule = {
     startTime: '',
@@ -11,6 +13,7 @@ const initSchedule = {
 let timerMsg = "";
 const ScheduleWater = () => {
     const navigate = useNavigate();
+    const {setAlerts}= useContext(AlertContext)
     const [scheduleTime, setScheduleTime] = useState(initSchedule);
     const [waterVolume, setWaterVolume] = useState({ currUTVolume: 0, currLTVolume: 0, prevUTVolume: 0, prevLTVolume: 0 });
     const [supplyBy, setsupplyBy] = useState('time');
@@ -167,7 +170,16 @@ const ScheduleWater = () => {
         
         if(!(supplyInfo.remainQuantity>=0 || supplyInfo.remainTime>=0 || supplyInfo.remainRoom>=0)){
             console.log(supplyInfo);
-            updateSupplyDetails({lastSupply:new Date().toISOString()})
+            const timeStamp= new Date().toISOString()
+            updateSupplyDetails({lastSupply:timeStamp})
+            saveTankAlerts({timeStamp,type:"supply",message:"Supplied water to home tank"})
+            .then(()=>{
+                getTankAlert()
+                .then((data)=>{
+                    setAlerts(data.alerts);
+                    console.log(data.alerts);
+                })
+            })
         }
         if (supplyInfo.startAfter >= 0 && supplyInfo.timerOn) {
             if (supplyInfo.remainTime >= 0 || supplyInfo.remainQuantity >= 0) {

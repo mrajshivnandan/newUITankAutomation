@@ -143,7 +143,7 @@ const Register = () => {
             <div className="mb-3 col-lg-6 col-md-6 col-12">
                 <label htmlFor="exampleInputPassword1" className="form-label">Status</label>
                 <select className="form-select" aria-label="Default select example" name="status" value={values.status} onBlur={handleBlur} onChange={handleChange} >
-                    <option value="" disabled selected hidden>Please Choose...</option>
+                    <option value="" disabled hidden>Please Choose...</option>
                     <option value="active">Active</option>
                     <option value="inactive">Inactive</option>
                 </select>

@@ -9,6 +9,7 @@ export const adminInfo = {
     email:"example@mail.co",
     phone:"9876543210",
     gender:"male",
+    profilePic: require('../images/avatar3.png'),
     creationdate:""
 }
 
