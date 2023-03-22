@@ -1,6 +1,6 @@
 import { useFormik } from 'formik'
 import React, {useContext, useEffect} from 'react'
-import { NavLink } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
 import { AdminContext } from './MyDashboard'
 import { showSimpleAlert } from '../components/AlertMsg';
@@ -8,6 +8,7 @@ import { fetchApi } from '../utility/apiHelper'
 import { loadAdminData } from '../utility/admin'
 
 const EditAdmin = () => {
+  const navigate= useNavigate();
   const {adminData, setAdminData} = useContext(AdminContext)
     // validation for admin details
     const adminSchema = () => Yup.object({
@@ -22,14 +23,17 @@ const EditAdmin = () => {
       email:adminData.email,
       phone:adminData.phone,
       gender:adminData.gender,
-      profilePic:adminData.profilePic
+      profilePic:adminData.profilePic,
+      societyName:adminData.societyName,
+      societyLocation:adminData.societyLocation,
       }
     const {values,errors, touched,setFieldValue, handleChange, handleBlur, handleSubmit} = useFormik({
     // initialValues: { wing: "A", room: "101", name: "test", email: "test@mail.com", age: "20", mobile: "8456893296", ownership: "", status: "" },
     initialValues: initValue,
     validationSchema: adminSchema,
     onSubmit: (values, action) => {
-        console.log("submit")
+        console.log("submitted profile form")
+        saveChanges()
         // action.resetForm();
     }
     })
@@ -40,6 +44,8 @@ const EditAdmin = () => {
       setFieldValue('phone',adminData.phone)
       setFieldValue('gender',adminData.gender)
       setFieldValue('profilePic',adminData.profilePic)
+      setFieldValue('societyName',adminData.societyName)
+      setFieldValue('societyLocation',adminData.societyLocation)
       // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [adminData])
   
@@ -48,7 +54,7 @@ const EditAdmin = () => {
     const reader = new FileReader();
     const file = e.target.files[0];
     const MAX_FILE_SIZE= 1*2024
-    if(file.size/1024>MAX_FILE_SIZE){
+    if(!file || file.size/1024>MAX_FILE_SIZE){
       showSimpleAlert( `File size exceeds ${MAX_FILE_SIZE}kb`)
       return
     }
@@ -62,11 +68,23 @@ const EditAdmin = () => {
   
   const saveChanges= async()=>{
     // console.log((supplyList[0]));
-
+    if(values.profilePic===adminData.profilePic){
+      setFieldValue('profilePic',null)
+    }
     await fetchApi('/updateProfile',values)
-    .then(()=>showSimpleAlert("Profile Updated Successfully"))
-    .catch((err=>{console.log(err);showSimpleAlert('Failed to update profile')}))
-    await loadAdminData().then(()=>setAdminData({...adminData,profilePic:values.profilePic}))
+    .then(async()=>{
+      showSimpleAlert("Profile Updated Successfully")
+      await loadAdminData()
+          .then((data) => {
+              if(data)
+              setAdminData({...data,
+                profilePic:data.profilePic?data.profilePic:adminData.profilePic,
+                societyName:data.societyName?data.societyName:adminData.societyName,
+                societyLocation:data.societyLocation?data.societyLocation:adminData.societyLocation,
+              });
+          })
+    })
+    navigate("/profile")
   }
 
 
@@ -89,7 +107,7 @@ const EditAdmin = () => {
             <div className="mb-3 col-lg-6 col-md-6 col-12">
                 <label htmlFor="exampleInputEmail1" className="form-label">Name</label>
                 <input type="text" name="name" value={values.name} onBlur={handleBlur} onChange={handleChange} className="form-control glowme" />
-            <p className='ms-4 mt-1 mb-4 text-danger' >{errors.name && touched.name ? errors.name : ""}</p>
+                <p className='ms-4 mt-1 mb-4 text-danger' >{errors.name && touched.name ? errors.name : ""}</p>
             </div>
             <div className="mb-3 col-lg-6 col-md-6 col-12">
                 <label htmlFor="exampleInputPassword1" className="form-label">Email</label>
@@ -110,8 +128,20 @@ const EditAdmin = () => {
                 </select>
                 <p className='ms-4 mt-1 mb-4 text-danger' >{errors.gender && touched.gender ? errors.gender : ""}</p>
             </div>
-            <button type="submit" onClick={saveChanges} className="btn btn-primary mb-2 glowme">Save</button>
-            <NavLink to="/profile" className="btn btn-outline-secondary bg-white text-dark">Cancel</NavLink>
+            <div className="mb-3 col-lg-6 col-md-6 col-12">
+                <label htmlFor="exampleInputEmail1" className="form-label">Society Name</label>
+                <input type="text" name="societyName" value={values.societyName} onBlur={handleBlur} onChange={handleChange} className="form-control glowme" />
+                <p className='ms-4 mt-1 mb-4 text-danger' >{errors.societyName && touched.societyName ? errors.societyName : ""}</p>
+            </div>
+            <div className="mb-3 col-lg-6 col-md-6 col-12">
+                <label htmlFor="exampleInputEmail1" className="form-label">Society Location</label>
+                <input type="text" name="societyLocation" value={values.societyLocation} onBlur={handleBlur} onChange={handleChange} className="form-control glowme" />
+                <p className='ms-4 mt-1 mb-4 text-danger' >{errors.societyLocation && touched.societyLocation ? errors.societyLocation : ""}</p>
+            </div>
+            <div className='d-flex'>
+            <button type="submit" className="btn btn-success glowme ms-auto me-2 px-md-4">Save</button>
+            <button onClick={()=>navigate("/profile")} className="btn btn-outline-secondary bg-white text-dark">Cancel</button>
+            </div>
         </div>
     </form>
 </div>

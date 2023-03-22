@@ -2,8 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import '../styles/Home.css'
 
-import img from "../images/home1.jpg" 
-
 const Home = () => {
     return (
         <>
@@ -25,17 +23,6 @@ const Home = () => {
                 </div>
             </div>
         </div>
-            {/* <div className="hero vh-100 d-flex align-items-center" id="home">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-lg-7 mx-auto text-center">
-                            <h1 className="fs-10 display-4 text-white">Tank Automation</h1>
-                            <p className="fs-5 text-white my-3">Tank Automation provides equitable water supply, reliability, completely visibility into your tanks, operate automatically, flexibility and it reduces the wastage of water</p>
-                            <Link to="/contact" className="btn me-2 btn-primary">Contact Us </Link>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
 
             <section id="team" >
                 <div className="container">

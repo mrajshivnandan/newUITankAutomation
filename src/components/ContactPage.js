@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useFormik } from 'formik'
 import {useNavigate} from 'react-router-dom'
-import { showModalAlert, showSimpleAlert } from './AlertMsg'
+import { showModalAlert, showSimpleAlert, loadAlerts } from './AlertMsg'
 import { fetchApi } from '../utility/apiHelper'
 import contactPageSchema from '../schemas/contactPageSchema'
 const ContactPage = () => {
@@ -55,6 +55,10 @@ const ContactPage = () => {
 
     }
 
+    useEffect(() => {
+        loadAlerts();
+    }, [])
+    
 
   return (
     <div className="container mt-5 shadow ">

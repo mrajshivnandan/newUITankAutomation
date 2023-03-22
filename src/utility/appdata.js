@@ -10,7 +10,9 @@ export const adminInfo = {
     phone:"9876543210",
     gender:"male",
     profilePic: require('../images/avatar3.png'),
-    creationdate:""
+    creationdate:"",
+    societyName:"Society Name",
+    societyLocation:"Society Location",
 }
 
 export const fetchInfo= {
