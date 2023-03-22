@@ -25,6 +25,20 @@ useEffect(() => {
 
 }, [location.pathname, location.key]);
 
+useEffect(() => {
+    var prevScrollpos = window.pageYOffset;
+    window.onscroll = function () {
+        var currentScrollPos = window.pageYOffset;
+        if (prevScrollpos > currentScrollPos) {
+            document.getElementById("navbar").style.top = "0";
+        } else {
+            document.getElementById("navbar").style.top = "-80px";
+        }
+        prevScrollpos = currentScrollPos;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [])
+
   return (
     <nav id='navbar' className="navbar fixed-top navbar-expand-lg bg-light" style={{ transition: 'top 0.3s' }}>
     <div className="container-fluid">

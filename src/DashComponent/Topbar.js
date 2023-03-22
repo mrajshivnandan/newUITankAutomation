@@ -30,6 +30,7 @@ const Topbar = () => {
         });
         showModalAlert("Are you sure you want to exit?", 'Confirm')
     }
+    
     useEffect(() => {
         loadAlerts();
         getTankAlert()
