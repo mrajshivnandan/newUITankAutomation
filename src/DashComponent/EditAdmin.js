@@ -1,11 +1,11 @@
 import { useFormik } from 'formik'
-import React, {useContext, useEffect, useState} from 'react'
+import React, {useContext, useEffect} from 'react'
 import { NavLink } from 'react-router-dom'
 import * as Yup from 'yup'
 import { AdminContext } from './MyDashboard'
 import { showSimpleAlert } from '../components/AlertMsg';
 import { fetchApi } from '../utility/apiHelper'
-import { getAdminData, loadAdminData } from '../utility/admin'
+import { loadAdminData } from '../utility/admin'
 
 const EditAdmin = () => {
   const {adminData, setAdminData} = useContext(AdminContext)
@@ -72,7 +72,6 @@ const EditAdmin = () => {
 
   return (
     <div className="container">
-    <NavLink to="/profile">Go Back</NavLink>
     <form className="mt-4" onSubmit={handleSubmit}>
 
       <div className='mb-3'>
