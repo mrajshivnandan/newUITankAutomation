@@ -56,27 +56,25 @@ const Login = () => {
             }
             console.log("Failed to login!");
         }else{
-            sessionStorage.setItem('loggedin','true')
-            showSimpleAlert("Login Successful");
             const adminData = data.userData;
             Object.entries(adminData).forEach((e) => {if(adminInfo[e[0]]!==undefined){adminInfo[e[0]]= e[1]}});
             
             console.log("Login Successful");
             const token= Cookies.get('jwtoken');
+            
             if(!token){
                 Cookies.set('jwtoken',data.token);
             }
-            // console.log(state,Cookies.get());
-            if(adminInfo.verified){
+            console.log(data.token);
+            if(data.token){
+                sessionStorage.setItem('loggedin','true')
+                showSimpleAlert("Login Successful");
                 navigate('/');
-                // setTimeout(() => {
-                //     console.log("Logged in");
-                // }, 100);
+                window.location.reload();
             }else{
-                navigate('/');
-                // navigate('/verify');
+                showSimpleAlert("Failed to Validate User");
             }
-            window.location.reload();
+            // console.log(state,Cookies.get());
         }
         } catch (error) {
             showModalAlert("Failed to Login");

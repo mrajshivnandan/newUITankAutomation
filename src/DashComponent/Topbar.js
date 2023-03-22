@@ -34,7 +34,8 @@ const Topbar = () => {
         loadAlerts();
         getTankAlert()
         .then((data)=>{
-            setAlerts(data.alerts);
+            if(data.alerts)
+            setAlerts(data.alerts.reverse());
             console.log(data.alerts);
         })
         
