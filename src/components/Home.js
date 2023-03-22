@@ -2,14 +2,30 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import '../styles/Home.css'
 
-// import { userInfo } from '../utility/appdata';
-// import { loadUserData } from '../utility/user';
-// import { showSimpleAlert } from './AlertMsg';
+import img from "../images/home1.jpg" 
 
 const Home = () => {
     return (
         <>
-            <div className="hero vh-100 d-flex align-items-center" id="home">
+        {/* <section id="team" >
+            <div className="row"></div>
+                <img src={img}></img>
+        </section> */}
+        <div style={{paddingTop: "80px"}}>
+        <div className="hero vh-100 d-flex align-items-center" id="home">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-7 mx-auto text-center">
+                            {/* <p className=".h4 fs-10 display-4 text-white">Tank Automation</p> */}
+                            <p className='h2 text-white fs-10'>Tank Automation</p>
+                            <p className="fs-5 text-white my-3">Tank Automation provides equitable water supply, reliability, completely visibility into your tanks, operate automatically, flexibility and it reduces the wastage of water</p>
+                            <Link to="/contact" className="btn me-2 btn-primary">Contact Us </Link>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            {/* <div className="hero vh-100 d-flex align-items-center" id="home">
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-7 mx-auto text-center">
@@ -19,7 +35,7 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             <section id="team" >
                 <div className="container">
@@ -30,7 +46,7 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="row text-center g-4">
-                        <div className="col-lg-5 card col-sm-6 me-5">
+                        <div className="col-lg-5 card col-md-5 me-2 ms-2">
                             <div className="team-member card-effect">
                                 <img src={require("../images/RajMishra.jpg")} alt="" />
                                 <h5 className="mb-0 mt-4">Raj Mishra</h5>
@@ -42,7 +58,7 @@ const Home = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-5 card col-sm-6 ">
+                        <div className="col-lg-5 card col-md-5 me-2 ms-2">
                             <div className="team-member card-effect">
                                 <img src={require("../images/HimanshuThakur.jpg")} alt="" />
                                 <h5 className="mb-0 mt-4">Himanshu Thakur</h5>
@@ -65,7 +81,7 @@ const Home = () => {
                         <div className="row">
                             <div className="col-md-10 offset-md-1">
                                 <h6 className="text-primary">WHY TO CHOOSE US</h6>
-                                <h1>Best solution for your society</h1>
+                                <h1>Best Solution for your society</h1>
                                 <p>This Water Automation in Modern Society [WAMS]  is to observe and manage the wastage of water due to various reasons like tap leakage, pipe leakage and water tank overflow. It can be deployed in each and every building which sends the water level information to the owner of a particular building.</p>
 
                                 <div className="feature d-flex mt-5">

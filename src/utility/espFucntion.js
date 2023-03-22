@@ -75,7 +75,7 @@ export const getSensorData = async () => {
   const res = await fetchApi("/getSensorData");
   
     // console.log("getSensorData: ");
-    // console.log(res.data);
+    // console.log(resES.data);
     if(res){
       return res.data;
     }
@@ -141,6 +141,7 @@ export const setEspConfigData = async (configData) => {
 
 export const fetchEspConfigData = async () => {
   
+  // use token or session if login then only fetchApi should work
   const res = await fetchApi("/fetchEspConfigData")
   
     console.log("EspConfigData: ");

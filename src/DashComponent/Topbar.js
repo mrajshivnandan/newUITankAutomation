@@ -34,6 +34,7 @@ const Topbar = () => {
         loadAlerts();
         getTankAlert()
         .then((data)=>{
+            if(data.alerts)
             setAlerts(data.alerts);
             console.log(data.alerts);
         })
@@ -62,7 +63,7 @@ const Topbar = () => {
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i className="fas fa-bell fa-fw"></i>
                                 {/*  <!-- Counter - Alerts --> */}
-                                <span className="badge badge-danger badge-counter">{alerts.length}</span>
+                                <span className="badge badge-danger badge-counter">{alerts ? alerts.length : -1}</span>
                             </a>
                             {/*   <!-- Dropdown - Alerts --> */}
                             <div className="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
