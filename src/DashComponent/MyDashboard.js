@@ -21,6 +21,7 @@ import { Routes, Route, useNavigate} from "react-router-dom";
 import { adminInfo } from '../utility/appdata';
 import { loadAdminData } from '../utility/admin';
 import { TankAlerts } from './TankAlerts';
+import { fetchEspConfigData } from '../utility/espFucntion';
 
 let initValue = {
   index: 0,
@@ -51,10 +52,15 @@ function MyDashboard() {
     //getting asmin info after the page is loaded
     if (!adminInfo.creationdate) {
       loadcomp.current.forEach((elem) => { elem.classList.add('placeholder'); })
+      fetchEspConfigData()
       loadAdminData()
           .then((data) => {
               if(data)
-              setAdminData({...data,profilePic:data.profilePic?data.profilePic:adminData.profilePic});
+              setAdminData({...data,
+                profilePic:data.profilePic?data.profilePic:adminData.profilePic,
+                societyName:data.societyName?data.societyName:adminData.societyName,
+                societyLocation:data.societyLocation?data.societyLocation:adminData.societyLocation,
+              });
           })
           .finally(()=>{
             loadcomp.current.forEach((elem) => { elem.classList.remove('placeholder') });

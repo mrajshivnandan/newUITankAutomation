@@ -1,4 +1,4 @@
-import React, { createContext, useEffect } from 'react'
+import React, { createContext} from 'react'
 import './App.css'
 import Navbar from './components/Navbar'
 import Home from './components/Home'
@@ -12,22 +12,13 @@ import BackPage from './components/BackPage';
 import AlertMsg from './components/AlertMsg';
 import VerificationPage from './components/VerificationPage';
 import ForgotPass from './components/ForgotPass';
-import { fetchEspConfigData } from './utility/espFucntion';
 import MyDashboard from './DashComponent/MyDashboard';
 import Spinner from './components/Spinner';
 
 export const userContext = createContext();
 function App() {
 
-  useEffect(() => {
-    fetchEspConfigData();
-    // updateSensorData({ updateConfigData: true })
-    return () => {
-      // second
-    }
-  }, [])
   return (
-    
     
     <>
     <AlertMsg/>

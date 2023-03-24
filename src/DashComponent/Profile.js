@@ -115,8 +115,8 @@ const Profile = () => {
                                     </label>
                                 </div>
                                 <div className="p-0 w-100">
-                                    <h5 className="card-title">Society Name</h5>
-                                    <p className="card-text">Location of society</p>
+                                    <h5 className="card-title">{adminData.societyName}</h5>
+                                    <p className="card-text">{adminData.societyLocation}</p>
                                 </div>
                                 <ul className="list-group list-group-flush" style={{ zIndex: "1" }}>
                                     <li className="list-group-item">Room number</li>
