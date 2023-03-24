@@ -1,22 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import '../styles/Home.css'
+import MultipleFlipCard from './MultipleFlipCard'
 
-import img from "../images/home1.jpg" 
 
 const Home = () => {
+
     return (
         <>
-        {/* <section id="team" >
-            <div className="row"></div>
-                <img src={img}></img>
-        </section> */}
         <div style={{paddingTop: "80px"}}>
         <div className="hero vh-100 d-flex align-items-center" id="home">
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-7 mx-auto text-center">
-                            {/* <p className=".h4 fs-10 display-4 text-white">Tank Automation</p> */}
                             <p className='h2 text-white fs-10'>Tank Automation</p>
                             <p className="fs-5 text-white my-3">Tank Automation provides equitable water supply, reliability, completely visibility into your tanks, operate automatically, flexibility and it reduces the wastage of water</p>
                             <Link to="/contact" className="btn me-2 btn-primary">Contact Us </Link>
@@ -25,17 +21,6 @@ const Home = () => {
                 </div>
             </div>
         </div>
-            {/* <div className="hero vh-100 d-flex align-items-center" id="home">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-lg-7 mx-auto text-center">
-                            <h1 className="fs-10 display-4 text-white">Tank Automation</h1>
-                            <p className="fs-5 text-white my-3">Tank Automation provides equitable water supply, reliability, completely visibility into your tanks, operate automatically, flexibility and it reduces the wastage of water</p>
-                            <Link to="/contact" className="btn me-2 btn-primary">Contact Us </Link>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
 
             <section id="team" >
                 <div className="container">
@@ -210,28 +195,11 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="row g-3">
-                        <div className="box -item col-lg-4 col-sm-6">
-                            <div className="flip-box">
-                                <div className="flip-box-front text-center">
-                                    <div className="inner colo-white">
-                                        <div className="flip-box-header">
-                                            <h3 className="flip-box-header">5V Single-Channel Relay Module</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flip-box-back text-center">
-                                    <div className="inner colo-white">
-                                        <div className="flip-box-header">
-                                            <p>Lorem ipsum dolor sit amet consectetur nisi necessitatibus repellat distinctio eveniet eaque fuga
-                                                in cumque optio consectetur harum vitae debitis sapiente praesentium aperiam aut</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <MultipleFlipCard />
                     </div>
                 </div>
             </section>
+            
         </>
     )
 }

@@ -1,8 +1,17 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
 const initTab = { login: 'Login', register: 'Register' };
 const Navbar = () => {
+
+    const navButton = useRef(null)
+    const linksContainerRef = useRef(null);
+
+    function collapseNav() {
+        navButton.current.classList.add("collapsed");
+        linksContainerRef.current.classList.remove("show");
+    }
+
     const [logRegTab, setLogRegTab] = useState(initTab)
     const location = useLocation();
 
@@ -42,24 +51,24 @@ useEffect(() => {
   return (
     <nav id='navbar' className="navbar fixed-top navbar-expand-lg bg-light" style={{ transition: 'top 0.3s' }}>
     <div className="container-fluid">
-        <NavLink className="navbar-brand" name='logo' to="/">
+        <NavLink onClick={collapseNav} className="navbar-brand" name='logo' to="/">
             {/* <img src={logoImg} alt="Logo" width="30" height="30" className="d-inline-block align-text-top" /> */}
             <img src={require("../images/logo4.png")} alt=" " width="60" height="50" />
             Tank Automation
         </NavLink>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button ref={navButton} className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <i className="fas fa-bars"></i>
         </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
+        <div className="collapse navbar-collapse" id="navbarNav" ref={linksContainerRef}>
             <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
-                    <NavLink className="nav-link" name='home' aria-current="page" to="/">Home</NavLink>
+                    <NavLink onClick={collapseNav} className="nav-link" name='home' aria-current="page" to="/">Home</NavLink>
                 </li>
                 <li className="nav-item">
-                    <NavLink className="nav-link" name='about' to="/about">About</NavLink>
+                    <NavLink onClick={collapseNav} className="nav-link" name='about' to="/about">About</NavLink>
                 </li>
                 <li className="nav-item">
-                    <NavLink className="nav-link" name='about' to="/contact">Contact</NavLink>
+                    <NavLink onClick={collapseNav} className="nav-link" name='about' to="/contact">Contact</NavLink>
                 </li>
                 <li className="nav-item dropdown">
                     <a className="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -67,8 +76,8 @@ useEffect(() => {
                         <span dangerouslySetInnerHTML={{ __html: logRegTab.login }}></span>/<span dangerouslySetInnerHTML={{ __html: logRegTab.register }}></span>
                     </a>
                     <ul className="dropdown-menu">
-                        <li><NavLink className="dropdown-item" name='login' to="/login">Login</NavLink></li>
-                        <li><NavLink className="dropdown-item" name='register' to="/register">Register</NavLink></li>
+                        <li><NavLink className="dropdown-item" name='login' onClick={collapseNav} to="/login" >Login</NavLink></li>
+                        <li><NavLink className="dropdown-item" name='register' onClick={collapseNav} to="/register">Register</NavLink></li>
                     </ul>
                 </li>
             </ul>

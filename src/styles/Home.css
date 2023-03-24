@@ -54,12 +54,7 @@
   .project:hover img {
     transform: scale(1.1);
   }
-  
-  /* img {
-    width: 100%;
-    height: 100%;
-  } */
-  
+
   .team-member img {
     width: 125px;
     height: 125px;
@@ -85,6 +80,7 @@
     min-height: 500px;
   }
 
+  /* Card flip hover */
   .flip-box {
     transform-style: preserve-3d;
     perspective: 1000px;
@@ -110,7 +106,7 @@
     transform-style: preserve-3d;
   }
 
-  .flip-box:hover .flip-box-front{
+  .flip-box .isflipped .flip-box-front{
     transform: rotateY(-180deg);
     transform-style: preserve-3d;
   }
@@ -124,22 +120,58 @@
     transform-style: preserve-3d;
   }
 
-  .flip-box:hover .flip-box-back{
+  .flip-box .isflipped .flip-box-back{
     transform: rotateY(0deg);
   }
-
-  /* .flip-box .inner{
-    position: absolute;
-    left: 0;
-    width: 100%;
-    padding: 100px;
-    outline: 1px solid transparent;
-    perspective: inherit;
-    z-index: 2;
-    transform: translateY(-50%)translateZ(60px) scale(.94);
-  } */
 
   .flip-box p{
     font-size: 20px;
     font-weight: 1.5rem;
+  }
+
+  /* Card flip with button */
+  .flip-card {
+    perspective: 1000px;
+    margin: 20px;
+    height: 350px;
+  }
+  
+  .flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding-bottom: 10%;
+    transform-style: preserve-3d;
+    transition: all 0.5s ease;
+  }
+  
+  .flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+  
+  .flip-card-front,
+  .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+  }
+  
+  .flip-card-front {
+    background-color: #ccc;
+    color: #000;
+  }
+  
+  .flip-card-back {
+    background-color: #333;
+    color: #fff;
+    transform: rotateY(180deg);
+  }
+  
+  .flip-card-front > i, .flip-card-back > i {
+    margin-top: 8px;
+    margin-right: 12px;
+    position: absolute;
+    top: 0;
+    right: 0;
   }
