@@ -33,7 +33,7 @@ function App() {
     <Navbar/>
     <Routes>
       <Route exact path="/" element={<Home />} />
-      <Route path="/about" element={<BackPage Element= {About}/>} />
+      <Route path="/about" element={<About/>} />
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/login" element={<BackPage Element= {Login}/>} />
       <Route path="/register" element={<BackPage Element= {Register}/>} />

@@ -17,7 +17,7 @@ function Sidebar() {
                 <div id="wrapper">
 
                     {/*  <!-- Sidebar --> */}
-                    <ul className="navbar-nav sidebar sidebar-dark" id="accordionSidebar" style={{backgroundColor: "#10324f"}}>
+                    <ul className="navbar-nav sidebar sidebar-dark" id="accordionSidebar">
 
                         {/*  <!-- Sidebar - Brand --> */}
                         <span className="sidebar-brand d-flex align-items-center justify-content-center">

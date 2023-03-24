@@ -77,7 +77,7 @@ function MyDashboard() {
     <EspContext.Provider value={{espData,setEspData}}>
     <AlertContext.Provider value={{alerts,setAlerts}}>
     <div className="mysidebar">
-    <div className=" bg-gradient-primary">
+    <div style={{backgroundColor: "#10324f"}}>
       <Sidebar />
       </div>
       <main className="content ">

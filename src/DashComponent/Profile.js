@@ -80,16 +80,16 @@ const Profile = () => {
                         <span className="col-xs-11 col-sm-7">Society Admin</span>
                     </div>
                     <div className='row my-2' >
-                        <span className="col-xs-11 col-sm-5 text_bold">Room no. : </span>
-                        <span className="col-xs-11 col-sm-7">105</span>
+                        <span className="col-xs-11 col-sm-5 text_bold">Society no. : </span>
+                        <span className="col-xs-11 col-sm-7">2</span>
                     </div>
                     <div className='row my-2' >
                         <span className="col-xs-11 col-sm-5 text_bold">Tank capacity : </span>
                         <span className="col-xs-11 col-sm-7">400L</span>
                     </div>
                     <div className='row my-2' >
-                        <span className="col-xs-11 col-sm-5 text_bold">Other : </span>
-                        <span className="col-xs-11 col-sm-7">Description3</span>
+                        <span className="col-xs-11 col-sm-5 text_bold">No of wing : </span>
+                        <span className="col-xs-11 col-sm-7">2</span>
                     </div>
                 </div>
 
@@ -115,8 +115,8 @@ const Profile = () => {
                                     </label>
                                 </div>
                                 <div className="p-0 w-100">
-                                    <h5 className="card-title">{adminData.societyName}</h5>
-                                    <p className="card-text">{adminData.societyLocation}</p>
+                                    <h5 className="card-title">{(adminData.societyName).toUpperCase()}</h5>
+                                    <p className="card-text mb-3">{(adminData.societyLocation).toUpperCase()}</p>
                                 </div>
                                 <ul className="list-group list-group-flush" style={{ zIndex: "1" }}>
                                     <li className="list-group-item">Room number</li>
@@ -132,11 +132,9 @@ const Profile = () => {
                         <div className="col-sm-10 col-md-10 col-lg-8 d-flex flex-column order-2 mt-4" >
                             <div className="col-lg-4 col-xl-3 order-1 d-flex mw-100 justify-content-between">
                                 <div className='placeholder-glow' >
-                                    <div className='glowme text_bold'>{adminData.name}</div>
+                                    <h2 className='glowme text_bold'>{adminData.name}</h2>
                                     <div className="w-100"></div>
-                                    <div className='glowme text-primary'>Society Admin</div>
-                                    <div className="w-100"></div>
-                                    <div className='glowme text-secondry'>Other info</div>
+                                    <h5 className='glowme text-primary'>Society Admin</h5>
                                 </div>
                                 <div>
                                     <button type="button" onClick={()=>navigate('/editAdmin')} className="btn btn-light">Edit Profile</button>

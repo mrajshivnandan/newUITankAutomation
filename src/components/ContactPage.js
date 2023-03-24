@@ -61,8 +61,8 @@ const ContactPage = () => {
     
 
   return (
-    <div className="container mt-5 shadow ">
-        <div className="row ">
+    <div className="container shadow " style={{marginTop: "80px"}}>
+        <div className="row">
             <div className="col-md-4 bg-primary p-5 text-white order-sm-first order-last">
                 <h2>Let's get in touch</h2>
                 <p>We're open for any suggestion or just to have a chat</p>
